@@ -1,0 +1,221 @@
+html.ytcexHasNotification :is(
+	#live-chat-header-context-menu.yt-live-chat-header-renderer,
+	#ytcex-menu-item
+) yt-icon:after {
+	display: flex;
+	position: absolute;
+	top: -2px;
+	right: -2px;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: var(--yt-spec-themed-blue);
+	content: "";
+}
+
+#ytcex-menu-item {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+}
+#ytcex-menu-item[use-icons] {
+	--yt-menu-item-icon-display: inline-block;
+}
+
+#ytcex-options-wrapper {
+	color: var(--yt-live-chat-primary-text-color,var(--yt-spec-text-primary));
+	z-index: 0;
+	flex: 1;
+	flex-basis: 1e-9px;
+	display: flex;
+	flex-direction: column;
+}
+#ytcex-options {
+	overflow-y: scroll;
+	flex: 1;
+	flex-basis: 1e-9px;
+}
+#ytcex-options #items {
+	padding: 8px 16px;
+	padding-right: 9px;
+}
+#ytcex-options-wrapper #header {
+	padding: 8px;
+	height: 48px;
+	border-bottom: var(--yt-live-chat-header-bottom-border,none);
+	box-sizing: border-box;
+	font-size: var(--yt-live-chat-header-font-size,18px);
+	line-height: 24px;
+	box-shadow: var(--yt-live-chat-header-box-shadow);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex: none;
+	z-index: 1;
+}
+#ytcex-options-wrapper #header #back-button {
+	margin: 0 8px;
+}
+#ytcex-options-wrapper #header #back-button > * {
+	--yt-button-color: var( --yt-live-chat-primary-text-color, var(--yt-deprecated-luna-black-opacity-lighten-3) );
+}
+
+.ytcex-options-caption-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 100%;
+	margin: 4px 0;
+}
+.ytcex-options-caption {
+	color: var(--yt-spec-text-secondary);
+	font-size: var(--ytd-tab-system-font-size);
+	font-weight: var(--ytd-tab-system-font-weight);
+	letter-spacing: var(--ytd-tab-system-letter-spacing);
+	flex: 1;
+	flex-basis: 1e-9px;
+}
+.ytcex-options-caption[is-new] {
+	text-decoration: underline var(--yt-spec-themed-blue);
+}
+
+.ytcex-options-toggle-container {
+	touch-action: pan-y;
+	margin: 0 8px;
+}
+.ytcex-options-toggle {
+	display: inline-block;
+	position: relative;
+	width: 36px;
+	height: 14px;
+	margin: 4px 1px;
+}
+.ytcex-options-toggle-bar {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	border-radius: 8px;
+	pointer-events: none;
+	transition: background-color linear 0.08s;
+	background-color: var(--paper-toggle-button-unchecked-bar-color, #000);
+	opacity: 0.4;
+}
+.ytcex-options-toggle-container[disabled] .ytcex-options-toggle-bar {
+	background-color: var(--paper-toggle-button-disabled-bar-color, #000);
+	opacity: 0.12;
+}
+.ytcex-options-toggle-button {
+	position: absolute;
+	top: -3px;
+	left: 0;
+	right: auto;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	transition: transform linear 0.08s, background-color linear 0.08s;
+	will-change: transform;
+	background-color: var(--paper-toggle-button-unchecked-button-color, #fafafa);
+}
+@keyframes toggle-button-shadow-on {
+	from {
+		box-shadow: 0 0 0 0 rgba(0 0 0 / 10%);
+	}
+	to {
+		box-shadow: 0 0 0 13.5px rgba(0 0 0 / 10%);
+	}
+}
+@keyframes toggle-button-shadow-off {
+	from {
+		box-shadow: 0 0 0 13.5px rgba(0 0 0 / 10%);
+	}
+	to {
+		box-shadow: 0 0 0 13.5px rgba(0 0 0 / 0%);
+	}
+}
+.ytcex-options-toggle-container:not(:focus) .ytcex-options-toggle-button {
+	animation: toggle-button-shadow-off 0.08s linear both;
+}
+.ytcex-options-toggle-container:focus .ytcex-options-toggle-button {
+	animation: toggle-button-shadow-on 0.08s linear both;
+}
+.ytcex-options-toggle-container[checked] .ytcex-options-toggle-button {
+	transform: translate(16px, 0);
+}
+.ytcex-options-toggle-container[checked]:not([disabled]) .ytcex-options-toggle-button {
+	background-color: var(--paper-toggle-button-checked-button-color, var(--primary-color));
+}
+.ytcex-options-toggle-container[disabled] .ytcex-options-toggle-button {
+	background: var(--paper-toggle-button-disabled-button-color, #bdbdbd);
+	opacity: 1;
+}
+.ytcex-options-toggle-container ~ .ytcex-options-toggle-collapse {
+	display: none;
+	width: 100%;
+	padding-left: 1.2em;
+}
+.ytcex-options-toggle-container[checked] ~ .ytcex-options-toggle-collapse[data-type="on"],
+.ytcex-options-toggle-container:not([checked]) ~ .ytcex-options-toggle-collapse[data-type="off"],
+.ytcex-options-toggle-container ~ .ytcex-options-toggle-collapse[data-type="always"] {
+	display: block;
+}
+
+.ytcex-options-slider {
+	position: relative;
+	width: 118px;
+	height: 25px;
+	margin: 0 8px;
+	overflow: clip visible;
+}
+.ytcex-options-slider-handle {
+	position: absolute;
+	top: 3px;
+	width: 18px;
+	height: 18px;
+	border: 0;
+	border-radius: 9px;
+	background: #fff;
+	transition: transform 0.08s;
+}
+.ytcex-options-slider-bright {
+	position: absolute;
+	top: 50%;
+	left: -100px;
+	margin-top: -2.5px;
+	width: 100px;
+	height: 5px;
+	background: #fff;
+}
+.ytcex-options-slider-shadow {
+	position: absolute;
+	top: 50%;
+	left: 18px;
+	margin-top: -2.5px;
+	width: 100px;
+	height: 5px;
+	background: var(--yt-spec-icon-disabled,#000);
+}
+.ytcex-options-slider[disabled] .ytcex-options-slider-handle {
+	background: #bdbdbd;
+}
+.ytcex-options-slider[disabled] .ytcex-options-slider-bright {
+	background: #bdbdbd;
+}
+.ytcex-options-slider[disabled] .ytcex-options-slider-shadow {
+	background: #000;
+	opacity: 0.12;
+}
+.ytcex-options-slider-handle[active]:after {
+	content: attr(data-val);
+	position: absolute;
+	width: 25px;
+	height: 17px;
+	top: -30px;
+	transform: translateX(-50%);
+	color: lightyellow;
+	background: gray;
+	font-size: 16px;
+	text-align: center;
+	text-shadow: none;
+	box-sizing: border-box;
+}

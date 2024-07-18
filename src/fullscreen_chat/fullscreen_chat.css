@@ -1,5 +1,5 @@
 /* top */
-body.no-scroll ytd-app[yc-fullscreen-chat] {
+body.no-scroll ytd-app[ytcex-fullscreen-chat] {
 	& #columns #secondary {
 		position: unset;
 	}
@@ -14,7 +14,7 @@ body.no-scroll ytd-app[yc-fullscreen-chat] {
 			display: none;
 		}
 	}
-	&[yc-fullscreen-chat-chat-docking] {
+	&[ytcex-fullscreen-chat-chat-docking] {
 		& ytd-watch-flexy {
 			overflow: clip;
 		}
@@ -78,16 +78,16 @@ body.no-scroll ytd-app[yc-fullscreen-chat] {
 
 /* child */
 :root {
-	--yc-fullscreen-chat-font-size: 16px;
-	--yc-fullscreen-chat-background-blur: 0px;
-	--yc-fullscreen-chat-opacity-def: 0.6;
-	--yc-fullscreen-chat-opacity-hover: 0.9;
-	--yc-fullscreen-chat-card-opacity-def: 0.9;
-	--yc-fullscreen-chat-card-opacity-hover: 0.9;
+	--ytcex-fullscreen-chat-font-size: 16px;
+	--ytcex-fullscreen-chat-background-blur: 0px;
+	--ytcex-fullscreen-chat-opacity-def: 0.6;
+	--ytcex-fullscreen-chat-opacity-hover: 0.9;
+	--ytcex-fullscreen-chat-card-opacity-def: 0.9;
+	--ytcex-fullscreen-chat-card-opacity-hover: 0.9;
 }
-yt-live-chat-app[yc-fullscreen-chat] {
+yt-live-chat-app[ytcex-fullscreen-chat] {
 	/* base grab-button */
-	& #chat-messages yt-live-chat-header-renderer > yt-icon-button#overflow:first-of-type {
+	& #chat-messages yt-live-chat-header-renderer > yt-live-chat-button#ytcex-fullscreen-move {
 		display: none;
 	}
 	/* base resize-buttons*/
@@ -99,9 +99,9 @@ yt-live-chat-app[yc-fullscreen-chat] {
 		min-height: 100% !important;
 	}
 
-	&[yc-fullscreen-chat-fullscreen] {
+	&[ytcex-fullscreen-chat-fullscreen] {
 		/* base background/border */
-		&:not([yc-fullscreen-chat-chat-docking]) {
+		&:not([ytcex-fullscreen-chat-chat-docking]) {
 			/* border */
 			& #panel-pages.yt-live-chat-renderer {
 				border-bottom: none;
@@ -240,7 +240,7 @@ yt-live-chat-app[yc-fullscreen-chat] {
 			}
 		}
 		/* base grab-button */
-		& #chat-messages yt-live-chat-header-renderer > yt-icon-button#overflow:first-of-type {
+		& #chat-messages yt-live-chat-header-renderer > yt-live-chat-button#ytcex-fullscreen-move {
 			display: unset;
 
 			& button {
@@ -252,7 +252,7 @@ yt-live-chat-app[yc-fullscreen-chat] {
 			}
 		}
 		/* base resize-buttons */
-		&:not([yc-fullscreen-chat-chat-docking]) #resizeButton {
+		&:not([ytcex-fullscreen-chat-chat-docking]) #resizeButton {
 			position: absolute;
 			display: grid;
 			top: 0;
@@ -300,11 +300,11 @@ yt-live-chat-app[yc-fullscreen-chat] {
 			}
 		}
 		/* base ninja-hide TODO */
-		&:not([yc-fullscreen-chat-chat-docking]) yt-live-chat-ninja-message-renderer {
+		&:not([ytcex-fullscreen-chat-chat-docking]) yt-live-chat-ninja-message-renderer {
 			display: none;
 		}
 		/* optional text-outline */
-		&:not([yc-fullscreen-chat-chat-docking])[yc-fullscreen-chat-text-outline] {
+		&:not([ytcex-fullscreen-chat-chat-docking])[ytcex-fullscreen-chat-text-outline] {
 			text-shadow: 
 				1px 1px 2px var(--yt-live-chat-background-color),
 				1px 0px 2px var(--yt-live-chat-background-color),
@@ -519,21 +519,21 @@ yt-live-chat-app[yc-fullscreen-chat] {
 		}
 		/* optional font-size */
 		yt-live-chat-text-message-renderer {
-			font-size: var(--yc-fullscreen-chat-font-size);
+			font-size: var(--ytcex-fullscreen-chat-font-size);
 		}
 		/* optional background-blur */
-		&:not([yc-fullscreen-chat-chat-docking])::before {
+		&:not([ytcex-fullscreen-chat-chat-docking])::before {
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
-			filter: blur(var(--yc-fullscreen-chat-background-blur));
-			backdrop-filter: blur(var(--yc-fullscreen-chat-background-blur));
+			filter: blur(var(--ytcex-fullscreen-chat-background-blur));
+			backdrop-filter: blur(var(--ytcex-fullscreen-chat-background-blur));
 			content: '';
 		}
 		/* optional opacity-def */
-		&:not([yc-fullscreen-chat-chat-docking]) {
+		&:not([ytcex-fullscreen-chat-chat-docking]) {
 			yt-live-chat-renderer::before {
 				background-color: var(--yt-live-chat-background-color);
 			}
@@ -569,11 +569,11 @@ yt-live-chat-app[yc-fullscreen-chat] {
 				#header.yt-live-chat-product-picker-panel-view-model,
 				yt-live-chat-product-picker-panel-item-view-model
 			)::before {
-				opacity: var(--yc-fullscreen-chat-opacity-def);
+				opacity: var(--ytcex-fullscreen-chat-opacity-def);
 			}
 		}
 		/* optional opacity-hover */
-		&:not([yc-fullscreen-chat-chat-docking]):hover :is(
+		&:not([ytcex-fullscreen-chat-chat-docking]):hover :is(
 			yt-live-chat-renderer,
 			yt-live-chat-toast-renderer[is-message-visible],
 			#spinner-container.yt-live-chat-qna-start-panel-renderer,
@@ -584,11 +584,11 @@ yt-live-chat-app[yc-fullscreen-chat] {
 			#header.yt-live-chat-product-picker-panel-view-model,
 			yt-live-chat-product-picker-panel-item-view-model
 		)::before {
-			opacity: var(--yc-fullscreen-chat-opacity-hover);
+			opacity: var(--ytcex-fullscreen-chat-opacity-hover);
 			transition: opacity .2s;
 		}
 		/* optional card-opacity-def */
-		&:not([yc-fullscreen-chat-chat-docking]) {
+		&:not([ytcex-fullscreen-chat-chat-docking]) {
 			& :is(
 				yt-live-chat-paid-sticker-renderer:not([dashboard-money-feed]) #card.yt-live-chat-paid-sticker-renderer,
 				yt-live-chat-paid-message-renderer[is-v2-style] #card.yt-live-chat-paid-message-renderer,
@@ -652,7 +652,7 @@ yt-live-chat-app[yc-fullscreen-chat] {
 				position: relative;
 
 				&::after {
-					opacity: var(--yc-fullscreen-chat-card-opacity-def);
+					opacity: var(--ytcex-fullscreen-chat-card-opacity-def);
 					position: absolute;
 					top: 0;
 					left: 0;
@@ -739,11 +739,11 @@ yt-live-chat-app[yc-fullscreen-chat] {
 				backdrop-filter: blur(8px);
 			}
 			& .background.yt-live-chat-banner-renderer {
-				opacity: var(--yc-fullscreen-chat-card-opacity-def);
+				opacity: var(--ytcex-fullscreen-chat-card-opacity-def);
 			}
 		}
 		/* optional card-opacity-hover */
-		&:not([yc-fullscreen-chat-chat-docking]):hover {
+		&:not([ytcex-fullscreen-chat-chat-docking]):hover {
 			:is(
 				yt-live-chat-paid-sticker-renderer:not([dashboard-money-feed]) #card.yt-live-chat-paid-sticker-renderer,
 				yt-live-chat-paid-message-renderer[is-v2-style] #card.yt-live-chat-paid-message-renderer,
@@ -755,11 +755,11 @@ yt-live-chat-app[yc-fullscreen-chat] {
 				#card.yt-live-chat-viewer-engagement-message-renderer,
 				#bumper-content.yt-bumper-user-edu-content-view-model,
 			)::after {
-				opacity: var(--yc-fullscreen-chat-card-opacity-hover);
+				opacity: var(--ytcex-fullscreen-chat-card-opacity-hover);
 				transition: opacity .2s;
 			}
 			& .background.yt-live-chat-banner-renderer {
-				opacity: var(--yc-fullscreen-chat-card-opacity-hover);
+				opacity: var(--ytcex-fullscreen-chat-card-opacity-hover);
 				transition: opacity .2s;
 			}
 		}

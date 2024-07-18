@@ -23,16 +23,34 @@
     "matches": ["https://www.youtube.com/*"],
     "all_frames": true,
     "js": [
-      "initialize.js",
-      "CommentPicker/script.js",
-      "FullscreenChat/script.js",
-      "ChatTickerScroll/script.js",
-      "content.js"
+      "loader.js"
     ],
     "css": [
-      "CommentPicker/style.css",
-      "FullscreenChat/style.css",
-      "ChatTickerScroll/style.css"
+      "options/options.css",
+      "chat_ticker_scroll/chat_ticker_scroll.css",
+      "fullscreen_chat/fullscreen_chat.css",
+      "comment_picker/comment_picker.css"
+    ]
+  }],
+  "web_accessible_resources": [{
+    "matches": ["https://www.youtube.com/*"],
+    "resources": [
+      "main.js",
+      "base/base.js",
+      "base/core.js",
+      "base/ext.js",
+      "youtube/youtube_event.js",
+      "youtube/youtube_state.js",
+      "core/connection.js",
+      "core/event_manager.js",
+      "core/status_manager.js",
+      "core/debug.js",
+      "options/options.js",
+      "options/inline.js",
+      "comment_picker/comment_picker.js",
+      "fullscreen_chat/fullscreen_chat.js",
+      "fullscreen_chat/inline.js",
+      "chat_ticker_scroll/chat_ticker_scroll.js"
     ]
   }],
   "permissions": [

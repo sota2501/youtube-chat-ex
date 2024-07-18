@@ -1,7 +1,7 @@
-yt-live-chat-app[yc-comment-picker] #chat {
+yt-live-chat-app[ytcex-comment-picker] #chat {
 	overflow: hidden;
 
-	> #item-list[data-ext-yc="CommentPicker"] {
+	> #item-list[data-ytcex="CommentPicker"] {
 		flex: unset;
 		max-height: 30%;
 		border-top: 1px solid rgba(255,255,255,0.1);
