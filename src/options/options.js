@@ -213,7 +213,7 @@ export default class Options extends Ext {
 			slider.children[0].setAttribute("data-val", value);
 			this._status.set(options.name, value);
 		};
-		wrapper.addEventListener("mousedown", e => {
+		slider.addEventListener("mousedown", e => {
 			if(moving !== false){
 				return;
 			}
@@ -229,7 +229,7 @@ export default class Options extends Ext {
 				}, {once: true});
 			}
 		});
-		wrapper.addEventListener("touchstart", e=>{
+		slider.addEventListener("touchstart", e=>{
 			if(moving !== false){
 				return;
 			}
@@ -259,13 +259,14 @@ export default class Options extends Ext {
 				document.addEventListener("touchend", touchend);
 			}
 		});
-		wrapper.addEventListener("keydown",e=>{
+		slider.addEventListener("keydown",e=>{
 			if(slider.getAttribute("disabled") == null){
 				let value = Number(slider.getAttribute("value"));
-				value = Math.min(Math.max(value - options.step, options.min), options.max);
 				if(e.keyCode == 37){
+					value = Math.min(Math.max(value - options.step, options.min), options.max);
 					this._status.set(options.name, value);
 				}else if(e.keyCode == 39){
+					value = Math.min(Math.max(value + options.step, options.min), options.max);
 					this._status.set(options.name, value);
 				}
 			}
