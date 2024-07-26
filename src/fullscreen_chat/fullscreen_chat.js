@@ -130,13 +130,7 @@ export default class FullscreenChat extends Ext {
 		} else {
 			if (YoutubeState.isAppFrame()) {
 				if ("FullscreenChat-opt-use-chat-docking" in changes) {
-					if (this._status.get("FullscreenChat-opt-use-chat-docking")) {
-						if (YoutubeState.isFullscreen() && this._status.get("FullscreenChat-frame-chat-docking")) {
-							this.setIframe(true);
-						}
-					} else {
-						this.setIframe(false);
-					}
+					this.setIframe(this._status.get("yt-fullscreen") && !YoutubeState.isChatCollapsing());
 				}
 			} else if (YoutubeState.isIframeChatFrame()) {
 				if ("FullscreenChat-opt-text-outline" in changes) {
@@ -184,7 +178,7 @@ export default class FullscreenChat extends Ext {
 				}
 				if ("FullscreenChat-opt-use-chat-docking" in changes) {
 					if (changes["FullscreenChat-opt-use-chat-docking"]) {
-						if (YoutubeState.isFullscreen() && this._status.get("FullscreenChat-frame-chat-docking")) {
+						if (this._status.get("yt-fullscreen") && this._status.get("FullscreenChat-frame-chat-docking")) {
 							document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat-chat-docking", "");
 						}
 					} else {
@@ -198,12 +192,14 @@ export default class FullscreenChat extends Ext {
 	enable() {
 		if(YoutubeState.isAppFrame()){
 			document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat", "");
-			this._event.listen("yt-load", this._bind.resetChatDocking);
-
-			this._event.listen("FullscreenChat-iframe-set", this._bind.setIframe);
+			this._event.listen("yt-load", this._bind.unloadMainEvent);
+			this._event.listen("yt-fullscreen", this._bind.fullscreenMainEvent);
+			this._event.listen("yt-live-chat-collapsed", this._bind.chatCollapseMainEvent);
+			this._event.listen("FullscreenChat-iframe-set", this._bind.loadMainEvent);
 			this._event.listen("FullscreenChat-iframe-grab", this._bind.grabMainEvent);
 			this._event.listen("FullscreenChat-iframe-ungrab", this._bind.ungrabMainEvent);
 			this._event.listen("FullscreenChat-iframe-adjust-fixed-length", this._bind.adjustMainEvent);
+			window.addEventListener("resize", this._bind.loadMainEvent);
 		}else if(YoutubeState.isIframeChatFrame()){
 			document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat", "");
 			if(this._status.get("FullscreenChat-opt-text-outline")){
@@ -273,46 +269,180 @@ export default class FullscreenChat extends Ext {
 
 			// フルスクリーン切り替え処理
 			this._event.listen("yt-fullscreen", this._bind.fullscreenIframeEvent);
-			this._event.listen("FullscreenChat-chat-docking", this._bind.chatDocking);
+			this._event.listen("FullscreenChat-chat-docking", this._bind.setIframeChatDocking);
 			this.fullscreenIframeEvent();
+
+			if (YoutubeState.isIframeChatFrame()) {
+				this._event.dispatch("FullscreenChat-iframe-set");
+			}
 		}
 	}
 
 	disable() {
 		if(YoutubeState.isAppFrame()){
-			this._event.unlisten("FullscreenChat-iframe-set", this._bind.setIframe);
-			this._event.unlisten("FullscreenChat-iframe-grab", this._bind.grabMainEvent);
-			this._event.unlisten("FullscreenChat-iframe-ungrab", this._bind.ungrabMainEvent);
-			this._event.unlisten("FullscreenChat-iframe-move", this._bind.moveMainEvent);
-			this._event.unlisten("yt-load", this._bind.resetChatDocking);
-			this.setIframe(null);
 			document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat");
 			document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-fullscreen");
-			document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
+			this._event.unlisten("yt-load", this._bind.unloadMainEvent);
+			this._event.unlisten("yt-fullscreen", this._bind.fullscreenMainEvent);
+			this._event.unlisten("yt-live-chat-collapsed", this._bind.chatCollapseMainEvent);
+			this._event.unlisten("FullscreenChat-iframe-set", this._bind.loadMainEvent);
+			this._event.unlisten("FullscreenChat-iframe-grab", this._bind.grabMainEvent);
+			this._event.unlisten("FullscreenChat-iframe-move", this._bind.moveMainEvent);
+			this._event.unlisten("FullscreenChat-iframe-ungrab", this._bind.ungrabMainEvent);
+			this._event.unlisten("FullscreenChat-iframe-adjust-fixed-length", this._bind.adjustMainEvent);
+			window.removeEventListener("resize", this._bind.loadMainEvent);
+			this.setIframe(false);
 		}else if(YoutubeState.isIframeChatFrame()){
 			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat");
-			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-fullscreen");
 			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-text-outline");
-			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
 			document.documentElement.style.removeProperty("--ytcex-fullscreen-chat-font-size");
 			document.documentElement.style.removeProperty("--ytcex-fullscreen-chat-background-blur");
 			document.documentElement.style.removeProperty("--ytcex-fullscreen-chat-opacity-def");
 			document.documentElement.style.removeProperty("--ytcex-fullscreen-chat-opacity-hover");
 			document.documentElement.style.removeProperty("--ytcex-fullscreen-chat-card-opacity-def");
 			document.documentElement.style.removeProperty("--ytcex-fullscreen-chat-card-opacity-hover");
+
 			this.moveBtn.remove();
 			this.resizeBtn.remove();
-			this._event.unlisten("yt-fullscreen", this._bind.fullscreenIframeEvent);
-			this._event.unlisten("FullscreenChat-chat-docking", this._bind.chatDocking);
 			document.removeEventListener("mousemove", this._bind.moveIframeEvent);
-			document.removeEventListener("touchmove", this._bind.moveIframeEvent);
 			document.removeEventListener("mouseup", this._bind.ungrabIframeEvent);
+			document.removeEventListener("touchmove", this._bind.moveIframeEvent);
 			document.removeEventListener("touchend", this._bind.ungrabIframeEvent);
 			document.removeEventListener("keydown", this._bind.adjustIframeEvent);
 			document.removeEventListener("keyup", this._bind.adjustIframeEvent);
+
+			this._event.unlisten("yt-fullscreen", this._bind.fullscreenIframeEvent);
+			this._event.unlisten("FullscreenChat-chat-docking", this._bind.setIframeChatDocking);
+			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-fullscreen");
+			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
 		}
 		const dom = document.querySelectorAll("[data-ytcex=\"FullscreenChat\"]");
 		dom.forEach(e=>e.remove());
+	}
+
+	/* main */
+	loadMainEvent() {
+		if (this._status.get("yt-fullscreen") && !YoutubeState.isChatCollapsing()) {
+			this.setIframe(true);
+		}
+	}
+
+	unloadMainEvent() {
+		if (this._status.get("yt-fullscreen") && !YoutubeState.isChatCollapsing()) {
+			this.setIframe(false);
+		}
+	}
+
+	fullscreenMainEvent() {
+		if (this._status.get("yt-fullscreen")) {
+			document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat-fullscreen", "");
+		} else {
+			document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-fullscreen");
+		}
+		if (!YoutubeState.isChatCollapsing()) {
+			this.setIframe(this._status.get("yt-fullscreen"));
+		}
+	}
+
+	chatCollapseMainEvent() {
+		if (this._status.get("yt-fullscreen")) {
+			this.setIframe(!YoutubeState.isChatCollapsing());
+		}
+	}
+
+	setIframe(enable) {
+		this.chatFrame = document.querySelector("ytd-live-chat-frame#chat");
+		if (enable) {
+			if (!this._status.get("FullscreenChat-opt-use-chat-docking") || !this._status.get("FullscreenChat-frame-chat-docking")) {
+				// 浮動チャット
+				this.unsetChatDocking();
+				this.setChatPosition(
+					this._status.get("FullscreenChat-frame-top"),
+					this._status.get("FullscreenChat-frame-left"),
+					this._status.get("FullscreenChat-frame-width"),
+					this._status.get("FullscreenChat-frame-height")
+				);
+			} else {
+				// 右固定チャット
+				this.unsetChatPosition();
+				this.setChatDocking();
+			}
+		} else {
+			// 通常チャット
+			this.unsetChatPosition();
+			this.unsetChatDocking();
+		}
+	}
+
+	setChatPosition(top, left, width, height, save=false) {
+		if (window.innerHeight < top + height) {
+			top = window.innerHeight - height;
+			if (top < 0) {
+				top = 0;
+				height = window.innerHeight;
+				if (height < 400) {
+					height = 400;
+				}
+			}
+		}
+		if (window.innerWidth < width + left) {
+			left = window.innerWidth - width;
+			if (left < 0) {
+				left = 0;
+				width = window.innerWidth;
+				if (width < 300) {
+					width = 300;
+				}
+			}
+		}
+
+		this.chatFrame.style.position = "absolute";
+		this.chatFrame.style.top = top + "px";
+		this.chatFrame.style.left = left + "px";
+		this.chatFrame.style.width = width + "px";
+		this.chatFrame.style.height = height + "px";
+		this.chatFrame.style.minHeight = "400px";
+		this.chatFrame.style.margin = "0";
+
+		if (save) {
+			this._status.set("FullscreenChat-frame-top", top);
+			this._status.set("FullscreenChat-frame-left", left);
+			this._status.set("FullscreenChat-frame-width", width);
+			this._status.set("FullscreenChat-frame-height", height);
+			this._status.set("FullscreenChat-frame-chat-docking", false);
+		}
+	}
+
+	unsetChatPosition() {
+		this.chatFrame.style.position = "";
+		this.chatFrame.style.top = "";
+		this.chatFrame.style.left = "";
+		this.chatFrame.style.width = "";
+		this.chatFrame.style.height = "";
+		this.chatFrame.style.minHeight = "";
+		this.chatFrame.style.margin = "";
+	}
+
+	setChatDocking() {
+		document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat-chat-docking", "");
+		this.chatFrame.style.position = "absolute";
+		this.chatFrame.style.top = "0";
+		this.chatFrame.style.right = "0";
+		this.chatFrame.style.width = "400px";
+		this.chatFrame.style.height = "100vh";
+		this.chatFrame.style.margin = "0";
+
+		this._status.set("FullscreenChat-frame-chat-docking", true);
+	}
+
+	unsetChatDocking() {
+		document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
+		this.chatFrame.style.position = "";
+		this.chatFrame.style.top = "";
+		this.chatFrame.style.right = "";
+		this.chatFrame.style.width = "";
+		this.chatFrame.style.height = "";
+		this.chatFrame.style.margin = "";
 	}
 
 	calcChatPosition(grabId, baseTop, baseLeft, baseWidth, baseHeight, moveX, moveY, adjust=false) {
@@ -424,72 +554,6 @@ export default class FullscreenChat extends Ext {
 		return calced;
 	}
 
-	setChatPosition(top, left, width, height, save=false) {
-		if (window.innerHeight < top + height) {
-			top = window.innerHeight - height;
-			if (top < 0) {
-				top = 0;
-				height = window.innerHeight;
-				if (height < 400) {
-					height = 400;
-				}
-			}
-		}
-		if (window.innerWidth < width + left) {
-			left = window.innerWidth - width;
-			if (left < 0) {
-				left = 0;
-				width = window.innerWidth;
-				if (width < 300) {
-					width = 300;
-				}
-			}
-		}
-
-		this.chatFrame.style.top = top + "px";
-		this.chatFrame.style.left = left + "px";
-		this.chatFrame.style.width = width + "px";
-		this.chatFrame.style.height = height + "px";
-
-		if (save) {
-			this._status.set("FullscreenChat-frame-top", top);
-			this._status.set("FullscreenChat-frame-left", left);
-			this._status.set("FullscreenChat-frame-width", width);
-			this._status.set("FullscreenChat-frame-height", height);
-			this._status.set("FullscreenChat-frame-chat-docking", false);
-		}
-	}
-
-	setChatDocking() {
-		document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat-chat-docking", "");
-		this.chatFrame.style.minHeight = "";
-		this.chatFrame.style.top = "0";
-		this.chatFrame.style.left = "";
-		this.chatFrame.style.right = "0";
-		this.chatFrame.style.width = "400px";
-		this.chatFrame.style.height = "100vh";
-
-		this._status.set("FullscreenChat-frame-chat-docking", true);
-	}
-
-	setChatUndocking() {
-		document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
-		this.chatFrame.style.minHeight = "400px";
-		this.chatFrame.style.right = "";
-	}
-
-	resizeMainEvent() {
-		if (this._status.get("FullscreenChat-opt-use-chat-docking") && this._status.get("FullscreenChat-frame-chat-docking")) {
-			return;
-		}
-
-		let top = this._status.get("FullscreenChat-frame-top");
-		let left = this._status.get("FullscreenChat-frame-left");
-		let width = this._status.get("FullscreenChat-frame-width");
-		let height = this._status.get("FullscreenChat-frame-height");
-		this.setChatPosition(top, left, width, height);
-	}
-
 	grabMainEvent(event) {
 		this.grab = {
 			id: event.target.closest("[data-btn-id]").getAttribute("data-btn-id"),
@@ -506,7 +570,7 @@ export default class FullscreenChat extends Ext {
 		if (this._status.get("FullscreenChat-opt-use-chat-docking") && this._status.get("FullscreenChat-frame-chat-docking")) {
 			this.base.top = 0;
 			this.base.left = window.innerWidth - this.base.width;
-			this.setChatUndocking();
+			this.unsetChatDocking();
 			this.setChatPosition(this.base.top, this.base.left, this.base.width, this.base.height);
 			this._event.dispatch("FullscreenChat-chat-docking", false);
 		}
@@ -521,7 +585,7 @@ export default class FullscreenChat extends Ext {
 	}
 
 	ungrabMainEvent(event) {
-		if (this._status.get("FullscreenChat-opt-use-chat-docking") && this.grab.id == "0" && event.pageX - (this.grab.x - this.base.left) > 30) {
+		if (this._status.get("FullscreenChat-opt-use-chat-docking") && this.grab.id == "0" && event.pageX - (this.grab.x - this.base.left) > 60) {
 			this._event.dispatch("FullscreenChat-chat-docking", true);
 			this.setChatDocking();
 		}else{
@@ -537,19 +601,16 @@ export default class FullscreenChat extends Ext {
 		this.adjust = adjust;
 	}
 
+	/* iframe */
 	fullscreenIframeEvent() {
-		if (YoutubeState.isFullscreen()) {
+		if (this._status.get("yt-fullscreen")) {
 			document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat-fullscreen", "");
 			if (this._status.get("FullscreenChat-opt-use-chat-docking") && this._status.get("FullscreenChat-frame-chat-docking")) {
 				document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat-chat-docking", "");
-				this._event.dispatch("FullscreenChat-iframe-set", true);
-			} else {
-				this._event.dispatch("FullscreenChat-iframe-set", false);
 			}
 		}else{
 			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-fullscreen");
 			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
-			this._event.dispatch("FullscreenChat-iframe-set", null);
 		}
 	}
 
@@ -640,7 +701,7 @@ export default class FullscreenChat extends Ext {
 		}
 	}
 
-	adjustIframeEvent = (e)=>{
+	adjustIframeEvent(e) {
 		if(e.keyCode == 16){
 			if(e.type == "keydown"){
 				this._event.dispatch("FullscreenChat-iframe-adjust-fixed-length", true);
@@ -650,44 +711,7 @@ export default class FullscreenChat extends Ext {
 		}
 	}
 
-	setIframe(frame) {
-		this.chatFrame = document.querySelector("ytd-live-chat-frame#chat");
-		if(frame != null){
-			if(frame){
-				document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat-chat-docking", "");
-				this.chatFrame.style.minHeight = "";
-				this.chatFrame.style.top = "0";
-				this.chatFrame.style.left = "";
-				this.chatFrame.style.right = "0";
-				this.chatFrame.style.width = "400px"; // this._status.get("FullscreenChat-frame-width-docking") + "px";
-				this.chatFrame.style.height = "100vh";
-			}else{
-				document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
-				this.chatFrame.style.minHeight = "400px";
-				this.chatFrame.style.top = this._status.get("FullscreenChat-frame-top") + "px";
-				this.chatFrame.style.left = this._status.get("FullscreenChat-frame-left") + "px";
-				this.chatFrame.style.right = "";
-				this.chatFrame.style.width = this._status.get("FullscreenChat-frame-width") + "px";
-				this.chatFrame.style.height = this._status.get("FullscreenChat-frame-height") + "px";
-			}
-			window.addEventListener("resize", this._bind.resizeMainEvent);
-		}else{
-			document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
-			this.chatFrame.style.minHeight = "";
-			this.chatFrame.style.top = "";
-			this.chatFrame.style.left = "";
-			this.chatFrame.style.right = "";
-			this.chatFrame.style.width = "";
-			this.chatFrame.style.height = "";
-			window.removeEventListener("resize", this._bind.resizeMainEvent);
-		}
-	}
-
-	resetChatDocking() {
-		document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-chat-docking");
-	}
-
-	chatDocking(docking) {
+	setIframeChatDocking(docking) {
 		if (docking) {
 			document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat-chat-docking","");
 		} else {

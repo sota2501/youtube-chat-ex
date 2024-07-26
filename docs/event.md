@@ -22,10 +22,10 @@ this._event.unlisten("event", this._bind.callback);
 * main
   * mainInitialized
   * initialized
-* event_manager(youtube)
-  * yt-load(yt-navigate-finish)
-  * yt-unload(yt-navigate-start)
-  * yt-fullscreen(yt-action yt-fullscreen-change-action)
+* event_manager (youtube)
+  * yt-load (yt-navigate-finish)
+  * yt-fullscreen (yt-action yt-fullscreen-change-action)
+  * yt-live-chat-collapsed (yt-action yt-set-live-chat-collapsed)
 * status_manager
   * statusInit
   * statusData
@@ -43,9 +43,13 @@ this._event.unlisten("event", this._bind.callback);
   * FullscreenChat-iframe-adjust-fixed-length
   * FullscreenChat-chat-docking
 
-## 過去(詳細不明)に記録したYouTubeイベント
+## YouTubeイベント
 ```js
 const ytEvents = [
+	'app-drawer-transitioned',
+	'iron-announce',
+	'iron-overlay-closed',	
+	'iron-overlay-opened',
 	'yt-action',
 	'yt-add-element-to-app',
 	'yt-autonav-pause-blur',
@@ -64,7 +68,7 @@ const ytEvents = [
 	'yt-history-pop',
 	'yt-masthead-height-changed',
 	'yt-navigate',
-	'yt-navigate-caches',
+	'yt-navigate-cache',
 	'yt-navigate-error',
 	'yt-navigate-finish',
 	'yt-navigate-redirect',
@@ -74,8 +78,6 @@ const ytEvents = [
 	'yt-page-data-fetched',
 	'yt-page-data-updated',
 	'yt-page-type-changed',
-	'yt-report-from-closed',
-	'yt-report-from-opend',
 	'yt-request-panel-mode-change',
 	'yt-service-request-completed',
 	'yt-service-request-error',

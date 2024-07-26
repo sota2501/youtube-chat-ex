@@ -60,12 +60,12 @@ export default class YoutubeState {
 		return this.isSubWindow() && this.isChatFrame();
 	}
 
-	static isFullscreen(){
-		if(this.isSubWindow()){
-			return window.opener.top.document.body.classList.contains("no-scroll");
-		}else{
-			return top.document.body.classList.contains("no-scroll");
+	// アプリフレームのみで使用可能
+	static isChatCollapsing(){
+		if(this.isAppFrame()){
+			return document.querySelector("ytd-live-chat-frame#chat")?.hasAttribute("collapsed") ?? true;
 		}
+		return null;
 	}
 	// チャットフレームのみで使用可能
 	static isLiveStreaming(){

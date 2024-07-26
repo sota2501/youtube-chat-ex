@@ -5,25 +5,31 @@ export default class YoutubeEvent extends Core {
 	constructor(event, status, debug) {
 		super();
 		super.register(event, status, debug);
+		this._event.listen("initialized", this._bind.init);
 
 		if (YoutubeState.isAppFrame()) {
-			document.querySelector("ytd-app").addEventListener("yt-navigate-finish", this._bind.onYtLoad);
-			document.querySelector("ytd-app").addEventListener("yt-navigate-start", this._bind.onYtUnload);
-			document.querySelector("ytd-app").addEventListener("yt-action", this._bind.onYtFullscreen);
+			document.querySelector("ytd-app").addEventListener("yt-navigate-finish", this._bind.onYtNavigateFinish);
+			document.querySelector("ytd-app").addEventListener("yt-action", this._bind.onYtAction);
 		}
 	}
 
-	onYtLoad(e) {
+	init() {
+		this._status.addNew("yt-fullscreen", false, "none");
+	}
+
+	onYtNavigateFinish(e) {
 		this._event.dispatch("yt-load", e);
 	}
 
-	onYtUnload(e) {
-		this._event.dispatch("yt-unload", e);
-	}
-
-	onYtFullscreen(e) {
-		if (e.detail?.actionName == "yt-fullscreen-change-action") {
-			this._event.dispatch("yt-fullscreen", e);
+	onYtAction(e) {
+		switch (e.detail?.actionName) {
+			case "yt-fullscreen-change-action":
+				this._status.set("yt-fullscreen", e.detail.args[0]);
+				this._event.dispatch("yt-fullscreen", e);
+				break;
+			case "yt-set-live-chat-collapsed":
+				this._event.dispatch("yt-live-chat-collapsed", e);
+				break;
 		}
 	}
 }

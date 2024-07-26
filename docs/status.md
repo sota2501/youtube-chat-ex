@@ -27,6 +27,7 @@ this._status.remove("key", false);	// 保存なし
 * Options-v **(sync)**
 * flag-notification **(sync)**
 * flag-use-local **(local)**
+* yt-fullscreen **(none)**
 * CommentPicker
   * CommentPicker-opt-owner
   * CommentPicker-opt-verified

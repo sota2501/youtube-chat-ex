@@ -4,9 +4,9 @@ import YoutubeEvent from "../youtube/youtube_event.js";
 export default class EventManager extends Connection {
 	register(event, status, debug) {
 		super.register(event, status, debug);
-		this._yevent = new YoutubeEvent(event, status, debug);
 		this._listenMessage(this._bind._onMessage);
 		this._listeners = {};
+		this._yevent = new YoutubeEvent(event, status, debug);
 	}
 
 	listen(event, callback) {

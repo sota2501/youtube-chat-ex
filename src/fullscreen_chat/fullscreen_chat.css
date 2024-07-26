@@ -3,17 +3,6 @@ body.no-scroll ytd-app[ytcex-fullscreen-chat] {
 	& #columns #secondary {
 		position: unset;
 	}
-
-	& ytd-live-chat-frame#chat {
-		margin: 0;
-		position: absolute;
-		border: none;
-		overflow: hidden;
-
-		> :not(iframe#chatframe) {
-			display: none;
-		}
-	}
 	&[ytcex-fullscreen-chat-chat-docking] {
 		& ytd-watch-flexy {
 			overflow: clip;
