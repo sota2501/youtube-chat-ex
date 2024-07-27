@@ -17,10 +17,6 @@ let value = this._status.get("key");
 // 設定
 this._status.set("key", value, true);	// 保存あり
 this._status.set("key", value, false);	// 保存なし
-
-// 削除
-this._status.remove("key", true);	// 保存あり
-this._status.remove("key", false);	// 保存なし
 ```
 
 ## 使用中のキー名

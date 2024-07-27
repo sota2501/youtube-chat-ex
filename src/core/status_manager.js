@@ -65,11 +65,7 @@ export default class StatusManager extends Core {
 				continue;
 			}
 
-			if (changes[key] === undefined) {
-				delete this._instance[key];
-			} else {
-				this._instance[key] = changes[key];
-			}
+			this._instance[key] = changes[key];
 		}
 	}
 
@@ -129,34 +125,19 @@ export default class StatusManager extends Core {
 			}
 		}
 
-		const changes = {[key]: value};
-		this._event.dispatch("statusChanged", changes);
-	}
-
-	remove(key, storage=true) {
-		if (!(key in this._prop)) {
-			console.error("status remove(error): ", key, value);
+		if (this._instance[key] == value) {
 			return;
 		}
 
-		if (storage) {
-			let save = this._prop[key].save;
-			if (save == "auto") {
-				if (this.get("flag-use-local")) {
-					save = "local";
-				} else {
-					save = "sync";
+		const changes = {[key]: value};
+		if (key == "flag-use-local") {
+			for (let key in this._prop) {
+				let _value = value ? this._local[key] : this._sync[key];
+				if (this._prop[key].save == "auto" && this._instance[key] != _value) {
+					changes[key] = _value;
 				}
 			}
-
-			if (this._prop[key].save == "sync") {
-				chrome.storage.sync.remove(key);
-			} else if (this._prop[key].save == "local") {
-				chrome.storage.local.remove(key);
-			}
 		}
-
-		const changes = {[key]: undefined};
 		this._event.dispatch("statusChanged", changes);
 	}
 }
