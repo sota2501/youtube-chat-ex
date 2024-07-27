@@ -9,12 +9,6 @@
 	"optionsTitle": {
 		"message": "Youtube Chat Ex settings"
 	},
-	"optionsBack": {
-		"message": "Back"
-	},
-	"Options_Description": {
-		"message": "On this setting screen, the setting items are reflected immediately. However, the setting items are applied only to the current page, so if you want the settings to be reflected permanently, you need to save them. Also, if you want to use the saved contents on other pages, you need to reload the settings."
-	},
 	"Options_UseLocal": {
 		"message": "Use local storage"
 	},
@@ -32,15 +26,6 @@
 	},
 	"Options_ShowNotifyBadgeFalseDescription": {
 		"message": "Not notify with badge even if new features are implemented. Click <a href=\"https://chrome.google.com/webstore/detail/abgjhpgebjabcdihdnlmnjkkpaifgalg\" target=\"_blank\" class=\"yt-formatted-string\">here</a> for update history."
-	},
-	"Options_Reload": {
-		"message": "Reload the setting"
-	},
-	"Options_SaveLocal": {
-		"message": "Save to local"
-	},
-	"Options_SaveSync": {
-		"message": "Save to global"
 	},
 
 	"CommentPicker_Description": {
