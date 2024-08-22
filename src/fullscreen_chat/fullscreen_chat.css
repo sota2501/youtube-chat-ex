@@ -17,18 +17,14 @@ body.no-scroll ytd-app[ytcex-fullscreen-chat] {
 			}
 			& .html5-video-container {
 				position: absolute;
-				display: flex;
-				justify-content: center;
 				width: 100%;
 				height: 100%;
 
 				& > .html5-main-video {
 					position: unset;
-					width: unset !important;
-					max-width: 100%;
-					height: unset !important;
-					max-height: 100%;
-					margin: auto 0;
+					width: 100% !important;
+					height: 100% !important;
+					object-fit: contain;
 				}
 			}
 			& .ytp-storyboard-framepreview .ytp-storyboard-framepreview-img {
@@ -100,6 +96,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				yt-live-chat-renderer,
 				yt-live-chat-header-renderer,
 				yt-live-chat-ticker-renderer,
+				tp-yt-paper-dialog,
+				ytd-engagement-panel-section-list-renderer[dialog] #content.ytd-engagement-panel-section-list-renderer,
 				yt-live-chat-toast-renderer[is-message-visible],
 				yt-live-chat-message-input-renderer,
 				#container.yt-live-chat-restricted-participation-renderer,
@@ -177,9 +175,18 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 					content: '';
 				}
 			}
+			& .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled {
+				background: none;
+
+				&:hover {
+					background: var(--yt-spec-black-pure-alpha-30);
+					backdrop-filter: contrast(0.5);
+				}
+			}
 			/* configured opacity */
 			& :is(
 				yt-live-chat-renderer,
+				tp-yt-paper-dialog,
 				tp-yt-paper-listbox.yt-dropdown-menu,
 				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
@@ -190,6 +197,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			& :is(
 				yt-live-chat-renderer,
+				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
 				#spinner-container.yt-live-chat-qna-start-panel-renderer,
 				#spinner-container.yt-live-chat-poll-editor-panel-renderer,
@@ -209,6 +217,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			/* acrylic */
 			& :is(
+				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
 				#spinner-container.yt-live-chat-qna-start-panel-renderer,
 				#spinner-container.yt-live-chat-poll-editor-panel-renderer,
@@ -312,7 +321,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 					drop-shadow(-1px -1px .5px var(--yt-live-chat-background-color));
 			}
 			& button {
-				text-shadow: unset;
+				text-shadow: none;
 			}
 			/* text-outline not-applicable-list */
 			& :is(
@@ -405,14 +414,25 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			& #banner-container.yt-live-chat-banner-renderer {
 				text-shadow: 
-					1px 1px 2px #0f0f0f,
-					1px 0px 2px #0f0f0f,
-					1px -1px 2px #0f0f0f,
-					0px 1px 2px #0f0f0f,
-					0px -1px 2px #0f0f0f,
-					-1px 1px 2px #0f0f0f,
-					-1px 0px 2px #0f0f0f,
-					-1px -1px 2px #0f0f0f;
+					1px 1px 2px var(--yt-spec-inverted-background),
+					1px 0px 2px var(--yt-spec-inverted-background),
+					1px -1px 2px var(--yt-spec-inverted-background),
+					0px 1px 2px var(--yt-spec-inverted-background),
+					0px -1px 2px var(--yt-spec-inverted-background),
+					-1px 1px 2px var(--yt-spec-inverted-background),
+					-1px 0px 2px var(--yt-spec-inverted-background),
+					-1px -1px 2px var(--yt-spec-inverted-background);
+			}
+			& yt-live-chat-toast-renderer[is-message-visible] {
+				text-shadow: 
+					1px 1px 2px var(--yt-live-chat-toast-background-color),
+					1px 0px 2px var(--yt-live-chat-toast-background-color),
+					1px -1px 2px var(--yt-live-chat-toast-background-color),
+					0px 1px 2px var(--yt-live-chat-toast-background-color),
+					0px -1px 2px var(--yt-live-chat-toast-background-color),
+					-1px 1px 2px var(--yt-live-chat-toast-background-color),
+					-1px 0px 2px var(--yt-live-chat-toast-background-color),
+					-1px -1px 2px var(--yt-live-chat-toast-background-color);
 			}
 			/* img-outline not-applicable-list */
 			& :is(
@@ -469,10 +489,10 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			& #banner-container.yt-live-chat-banner-renderer :is(img, svg) {
 				filter: 
-					drop-shadow(1px 1px .5px #0f0f0f)
-					drop-shadow(1px -1px .5px #0f0f0f)
-					drop-shadow(-1px 1px .5px #0f0f0f)
-					drop-shadow(-1px -1px .5px #0f0f0f);
+					drop-shadow(1px 1px .5px var(--yt-spec-inverted-background))
+					drop-shadow(1px -1px .5px var(--yt-spec-inverted-background))
+					drop-shadow(-1px 1px .5px var(--yt-spec-inverted-background))
+					drop-shadow(-1px -1px .5px var(--yt-spec-inverted-background));
 			}
 			/* margin */
 			& :is(
@@ -526,6 +546,9 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			yt-live-chat-renderer::before {
 				background-color: var(--yt-live-chat-background-color);
 			}
+			tp-yt-paper-dialog::before {
+				background-color: var(--paper-dialog-background-color, var(--primary-background-color));
+			}
 			yt-live-chat-toast-renderer[is-message-visible]::before {
 				background-color: var(--yt-live-chat-toast-background-color);
 			}
@@ -549,6 +572,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			:is(
 				yt-live-chat-renderer,
+				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
 				#spinner-container.yt-live-chat-qna-start-panel-renderer,
 				#spinner-container.yt-live-chat-poll-editor-panel-renderer,
@@ -564,6 +588,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 		/* optional opacity-hover */
 		&:not([ytcex-fullscreen-chat-chat-docking]):hover :is(
 			yt-live-chat-renderer,
+			tp-yt-paper-dialog,
 			yt-live-chat-toast-renderer[is-message-visible],
 			#spinner-container.yt-live-chat-qna-start-panel-renderer,
 			#spinner-container.yt-live-chat-poll-editor-panel-renderer,
@@ -591,10 +616,13 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				#contents.yt-live-chat-mode-change-message-renderer,
 				#card.yt-live-chat-viewer-engagement-message-renderer,
 				#bumper-content.yt-bumper-user-edu-content-view-model,
+				yt-live-chat-banner-renderer.yt-live-chat-banner-manager,
+				yt-live-chat-banner-manager[has-active-banner],
 				#menu.yt-live-chat-paid-sticker-renderer,
 				#menu.yt-live-chat-paid-message-renderer,
 				#menu.yt-live-chat-membership-item-renderer,
-				#menu.ytd-sponsorships-live-chat-header-renderer
+				#menu.ytd-sponsorships-live-chat-header-renderer,
+				#menu.yt-live-chat-viewer-engagement-message-renderer
 			) {
 				background: none;
 			}
@@ -605,7 +633,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				#header.ytd-sponsorships-live-chat-header-renderer,
 				#contents.yt-live-chat-mode-change-message-renderer,
 				#card.yt-live-chat-viewer-engagement-message-renderer,
-				#bumper-content.yt-bumper-user-edu-content-view-model
+				#bumper-content.yt-bumper-user-edu-content-view-model,
+				yt-live-chat-banner-renderer.yt-live-chat-banner-manager
 			) {
 				position: relative;
 
@@ -621,10 +650,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			& yt-live-chat-pinned-message-renderer :is(
 				yt-live-chat-paid-sticker-renderer:not([dashboard-money-feed]) #card.yt-live-chat-paid-sticker-renderer,
-				yt-live-chat-paid-message-renderer #card.yt-live-chat-paid-message-renderer,
 				#card.yt-live-chat-membership-item-renderer,
-				#header.ytd-sponsorships-live-chat-header-renderer,
-				#bumper-content.yt-bumper-user-edu-content-view-model
+				#header.ytd-sponsorships-live-chat-header-renderer
 			) {
 				backdrop-filter: blur(8px);
 			}
@@ -636,7 +663,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				#header.ytd-sponsorships-live-chat-header-renderer,
 				#contents.yt-live-chat-mode-change-message-renderer,
 				#card.yt-live-chat-viewer-engagement-message-renderer,
-				#bumper-content.yt-bumper-user-edu-content-view-model
+				#bumper-content.yt-bumper-user-edu-content-view-model,
+				yt-live-chat-banner-renderer.yt-live-chat-banner-manager
 			) {
 				position: relative;
 
@@ -650,6 +678,16 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 					height: 100%;
 					content: '';
 				}
+			}
+			& yt-live-chat-banner-manager[has-active-banner]::after {	/* parent is "position: absolute;" */
+				opacity: var(--ytcex-fullscreen-chat-card-opacity-def);
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: -1;
+				width: 100%;
+				height: 100%;
+				content: '';
 			}
 			/* border */
 			& yt-live-chat-paid-sticker-renderer:not([dashboard-money-feed]) #card.yt-live-chat-paid-sticker-renderer::before {
@@ -687,6 +725,15 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				border: 3px solid var(--yt-live-chat-vem-background-color);
 				border-radius: 4px;
 			}
+			& yt-live-chat-banner-renderer.yt-live-chat-banner-manager {
+				&::before {
+					border: 3px solid var(--yt-spec-inverted-background);
+					border-radius: 8px;
+				}
+				&[collapsed]::before {
+					border-radius: 22px;
+				}
+			}
 			/* background */
 			& yt-live-chat-paid-sticker-renderer:not([dashboard-money-feed]) #card.yt-live-chat-paid-sticker-renderer::after {
 				border-radius: 12px;
@@ -723,12 +770,15 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				border-radius: 4px;
 				background-color: var(--yt-live-chat-vem-background-color);
 			}
+			& yt-live-chat-banner-renderer.yt-live-chat-banner-manager::after {
+				background-color: var(--yt-spec-inverted-background);
+			}
+			& yt-live-chat-banner-manager[has-active-banner]::after {
+				background: var(--yt-live-chat-banner-gradient-scrim);
+			}
 			/* acrylic */
 			& yt-live-chat-banner-renderer.yt-live-chat-banner-manager {
 				backdrop-filter: blur(8px);
-			}
-			& .background.yt-live-chat-banner-renderer {
-				opacity: var(--ytcex-fullscreen-chat-card-opacity-def);
 			}
 		}
 		/* optional card-opacity-hover */
@@ -743,11 +793,9 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				#contents.yt-live-chat-mode-change-message-renderer,
 				#card.yt-live-chat-viewer-engagement-message-renderer,
 				#bumper-content.yt-bumper-user-edu-content-view-model,
+				yt-live-chat-banner-renderer.yt-live-chat-banner-manager,
+				yt-live-chat-banner-manager[has-active-banner]
 			)::after {
-				opacity: var(--ytcex-fullscreen-chat-card-opacity-hover);
-				transition: opacity .2s;
-			}
-			& .background.yt-live-chat-banner-renderer {
 				opacity: var(--ytcex-fullscreen-chat-card-opacity-hover);
 				transition: opacity .2s;
 			}
