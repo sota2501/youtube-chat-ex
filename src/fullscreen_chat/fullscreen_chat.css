@@ -186,7 +186,6 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			/* configured opacity */
 			& :is(
 				yt-live-chat-renderer,
-				tp-yt-paper-dialog,
 				tp-yt-paper-listbox.yt-dropdown-menu,
 				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
