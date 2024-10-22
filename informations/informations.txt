@@ -11,6 +11,8 @@ Youtubeに追加機能を提供する拡張機能。追加したい項目をチ�
 	チャット欄の右上のボタンから設定画面を開くボタンにアクセス可能
 
 更新履歴
+	2.0.3 (2024-10-22)
+		スタイルの微調整
 	2.0.2 (2024-08-25)
 		表示崩れの修正
 	2.0.1 (2024-08-23)
@@ -72,19 +74,22 @@ How to open the settings screen
 	Click on the button in the upper right corner of the chat field to access the settings.
 
 Update history
+	2.0.3 (2024-10-22)
+		fix
+			Corrupted layout
 	2.0.2 (2024-08-25)
 		fix
-			Minor style corrections
+			Corrupted layout
 	2.0.1 (2024-08-23)
 		fix
-			Minor style corrections
+			Corrupted layout
 	2.0.0 (2024-07-27)
 		fix
 			Core system improvements
-			Minor style corrections
+			Corrupted layout
 	1.3.12 (2024-05-31)
 		fix
-			Minor style corrections
+			Corrupted layout
 	1.3.11 (2024-02-11)
 		fix
 			Compatible with tablet devices
