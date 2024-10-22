@@ -25,7 +25,7 @@ this._event.unlisten("event", this._bind.callback);
 * event_manager (youtube)
   * yt-load (yt-navigate-finish)
   * yt-fullscreen (yt-action yt-fullscreen-change-action)
-  * yt-live-chat-collapsed (yt-action yt-set-live-chat-collapsed)
+  * yt-live-chat-collapsed (yt-chat-collapsed-changed)
 * status_manager
   * statusInit
   * statusData

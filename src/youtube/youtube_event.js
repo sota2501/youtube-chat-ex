@@ -9,6 +9,7 @@ export default class YoutubeEvent extends Core {
 
 		if (YoutubeState.isAppFrame()) {
 			document.querySelector("ytd-app").addEventListener("yt-navigate-finish", this._bind.onYtNavigateFinish);
+			document.querySelector("ytd-app").addEventListener("yt-chat-collapsed-changed", this._bind.onYtChatCollapsedChanged);
 			document.querySelector("ytd-app").addEventListener("yt-action", this._bind.onYtAction);
 		}
 	}
@@ -21,13 +22,17 @@ export default class YoutubeEvent extends Core {
 		this._event.dispatch("yt-load", e);
 	}
 
+	onYtChatCollapsedChanged(e) {
+		this._event.dispatch("yt-live-chat-collapsed", e);
+	}
+
 	onYtAction(e) {
 		switch (e.detail?.actionName) {
 			case "yt-fullscreen-change-action":
 				this._status.set("yt-fullscreen", e.detail.args[0]);
 				this._event.dispatch("yt-fullscreen", e);
 				break;
-			case "yt-set-live-chat-collapsed":
+			case "yt-set-live-chat-collapsed":	// legacy
 				this._event.dispatch("yt-live-chat-collapsed", e);
 				break;
 		}
