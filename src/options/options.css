@@ -174,7 +174,7 @@ html.ytcexHasNotification :is(
 	height: 18px;
 	border: 0;
 	border-radius: 9px;
-	background: #fff;
+	background: var(--yt-spec-touch-response);
 	transition: transform 0.08s;
 }
 .ytcex-options-slider-bright {
@@ -184,7 +184,7 @@ html.ytcexHasNotification :is(
 	margin-top: -2.5px;
 	width: 100px;
 	height: 5px;
-	background: #fff;
+	background: var(--yt-spec-touch-response);
 }
 .ytcex-options-slider-shadow {
 	position: absolute;
