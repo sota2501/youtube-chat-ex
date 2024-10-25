@@ -71,13 +71,13 @@ export default class CommentPicker extends Ext {
 				"CommentPicker-opt-moderator" in changes
 			) {
 				this.items_observers?.disconnect();
-				Array.from(this.addedItems.childNodes).forEach(node => {
+				this.addedItems.childNodes.forEach(node => {
 					const replacement = this.baseItems.querySelector(`*[data-comment-id="${node.id}"]`);
 					replacement.after(node);
 					replacement.remove();
 				});
 				this.anchor = false;
-				this.itemsCallback([{ addedNodes: Array(...this.baseItems.children), removedNodes: [] }]);
+				this.baseItems.childNodes.forEach(this._bind.processAddedNode);
 				this.items_observers.observe(this.baseItems, { childList: true });
 			}
 		}
@@ -128,7 +128,7 @@ export default class CommentPicker extends Ext {
 		this.addedItems.closest("#item-scroller").nextElementSibling.addEventListener("click", this._bind.scrollBottom);
 
 		this.anchor = false;
-		this.itemsCallback([{ addedNodes: Array(...this.baseItems.children), removedNodes: [] }]);
+		this.baseItems.childNodes.forEach(this._bind.processAddedNode);
 		if (!this.list_observers) {
 			this.list_observers = new MutationObserver(this._bind.listCallback);
 		}
@@ -145,7 +145,7 @@ export default class CommentPicker extends Ext {
 		this.addedItems.closest("#item-scroller").nextElementSibling.removeEventListener("click", this._bind.scrollBottom);
 		this.addedItems.closest("#item-scroller").removeEventListener("scroll", this._bind.scrollEvent);
 		window.removeEventListener("resize", this._bind.resizeEvent);
-		Array.from(this.addedItems.childNodes).forEach(node => {
+		this.addedItems.childNodes.forEach(node => {
 			const replacement = this.baseItems.querySelector(`*[data-comment-id="${node.id}"]`);
 			replacement.after(node);
 			replacement.remove();
@@ -172,48 +172,48 @@ export default class CommentPicker extends Ext {
 
 	itemsCallback(mutationList) {
 		mutationList.forEach(mutation => {
-			if (mutation.addedNodes.length) {
-				mutation.addedNodes.forEach(node => {
-					if (
-						this._status.get("CommentPicker-opt-owner") && node.querySelector("#author-name.owner") ||
-						this._status.get("CommentPicker-opt-verified") && node.querySelector("yt-live-chat-author-badge-renderer[type=\"verified\"]") ||
-						this._status.get("CommentPicker-opt-moderator") && node.querySelector("yt-live-chat-author-badge-renderer[type=\"moderator\"]") ||
-						this.anchor == true && !node.classList.contains("fixedComment")
-					) {
-						const liveAnchor = this._status.get("CommentPicker-opt-owner") && node.querySelector("#author-name.owner") && YoutubeState.isLiveStreaming();
-						const prevCheck = elm => {
-							if (elm.querySelector("#message").innerText.match(/\↑/g)) {
-								prevCheck(elm.previousElementSibling);
-								this.pickComment(elm.previousElementSibling);
-							}
-						};
-						if (liveAnchor) {
-							prevCheck(node);
-						}
-						if ((liveAnchor || this.anchor) && node.querySelector("#message").innerText.match(/\↓/g)) {
-							this.anchor = true;
-						} else {
-							this.anchor = false;
-						}
-						this.pickComment(node);
-					}
-				});
-			}
-			if (mutation.removedNodes.length) {
-				mutation.removedNodes.forEach(node => {
-					if (Array.from(node.classList).includes("fixedComment")) {
-						const picked = this.addedItems.querySelector(`*[id="${node.dataset.commentId}"]`);
-						if (picked) {
-							picked.remove();
-						}
-						const addedScroller = this.addedItems.closest("#item-scroller");
-						if (addedScroller.scrollTop == addedScroller.scrollHeight - addedScroller.clientHeight) {
-							this.scrollEvent();
-						}
-					}
-				});
-			}
+			mutation.addedNodes.forEach(this._bind.processAddedNode);
+			mutation.removedNodes.forEach(this._bind.processRemovedNode);
 		});
+	}
+
+	processAddedNode(node) {
+		if (
+			this._status.get("CommentPicker-opt-owner") && node.querySelector("#author-name.owner") ||
+			this._status.get("CommentPicker-opt-verified") && node.querySelector("yt-live-chat-author-badge-renderer[type=\"verified\"]") ||
+			this._status.get("CommentPicker-opt-moderator") && node.querySelector("yt-live-chat-author-badge-renderer[type=\"moderator\"]") ||
+			this.anchor == true && !node.classList.contains("fixedComment")
+		) {
+			const liveAnchor = this._status.get("CommentPicker-opt-owner") && node.querySelector("#author-name.owner") && YoutubeState.isLiveStreaming();
+			const prevCheck = elm => {
+				if (elm.querySelector("#message").innerText.match(/\↑/g)) {
+					prevCheck(elm.previousElementSibling);
+					this.pickComment(elm.previousElementSibling);
+				}
+			};
+			if (liveAnchor) {
+				prevCheck(node);
+			}
+			if ((liveAnchor || this.anchor) && node.querySelector("#message").innerText.match(/\↓/g)) {
+				this.anchor = true;
+			} else {
+				this.anchor = false;
+			}
+			this.pickComment(node);
+		}
+	}
+
+	processRemovedNode(node) {
+		if (node.classList.contains("fixedComment")) {
+			const picked = this.addedItems.querySelector(`*[id="${node.dataset.commentId}"]`);
+			if (picked) {
+				picked.remove();
+			}
+			const addedScroller = this.addedItems.closest("#item-scroller");
+			if (addedScroller.scrollTop == addedScroller.scrollHeight - addedScroller.clientHeight) {
+				this.scrollEvent();
+			}
+		}
 	}
 
 	pickComment(elm) {
