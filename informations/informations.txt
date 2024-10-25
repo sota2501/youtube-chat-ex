@@ -11,6 +11,8 @@ Youtubeに追加機能を提供する拡張機能。追加したい項目をチ�
 	チャット欄の右上のボタンから設定画面を開くボタンにアクセス可能
 
 更新履歴
+	2.0.4 (2024-10-26)
+		コメント固定化機能でコメントが固定されない問題の修正
 	2.0.3 (2024-10-22)
 		スタイルの微調整
 	2.0.2 (2024-08-25)
@@ -74,6 +76,9 @@ How to open the settings screen
 	Click on the button in the upper right corner of the chat field to access the settings.
 
 Update history
+	2.0.4 (2024-10-26)
+		fix
+			Comments were not pinned on Bottom pinning of comments
 	2.0.3 (2024-10-22)
 		fix
 			Corrupted layout
