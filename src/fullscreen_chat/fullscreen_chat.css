@@ -535,7 +535,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 		}
 		/* optional font-size */
-		yt-live-chat-text-message-renderer {
+		& yt-live-chat-text-message-renderer {
 			font-size: var(--ytcex-fullscreen-chat-font-size);
 		}
 		/* optional background-blur */
@@ -551,38 +551,38 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 		}
 		/* optional opacity-def */
 		&:not([ytcex-fullscreen-chat-chat-docking]) {
-			yt-live-chat-renderer::before {
+			& yt-live-chat-renderer::before {
 				background-color: var(--yt-live-chat-background-color);
 			}
-			tp-yt-paper-dialog::before {
+			& tp-yt-paper-dialog::before {
 				background-color: var(--paper-dialog-background-color, var(--primary-background-color));
 			}
-			yt-live-chat-toast-renderer[is-message-visible]::before {
+			& yt-live-chat-toast-renderer[is-message-visible]::before {
 				background-color: var(--yt-live-chat-toast-background-color);
 			}
-			:is(
+			& :is(
 				#spinner-container.yt-live-chat-qna-start-panel-renderer,
 				#spinner-container.yt-live-chat-poll-editor-panel-renderer
 			)::before {
 				background-color: var(--yt-live-chat-action-panel-background-color);
 			}
-			tp-yt-paper-listbox.yt-dropdown-menu::before {
+			& tp-yt-paper-listbox.yt-dropdown-menu::before {
 				background-color: var(--yt-spec-brand-background-primary);
 			}
-			ytd-menu-popup-renderer::before {
+			& ytd-menu-popup-renderer::before {
 				background-color: var(--yt-spec-menu-background);
 			}
-			#dropdown.yt-live-chat-text-input-field-renderer::before {
+			& #dropdown.yt-live-chat-text-input-field-renderer::before {
 				background-color: var(--yt-live-chat-text-input-field-suggestion-background-color,#fff);
 			}
-			:is(#header.yt-live-chat-product-picker-panel-view-model, yt-live-chat-product-picker-panel-item-view-model)::before {
+			& :is(#header.yt-live-chat-product-picker-panel-view-model, yt-live-chat-product-picker-panel-item-view-model)::before {
 				background-color: var(--yt-spec-base-background);
 			}
-			yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model::before {
+			& yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model::before {
 				background-color: var(--yt-spec-suggested-action);
 				opacity: calc(0.4 + 0.6 * var(--ytcex-fullscreen-chat-opacity-def));		/* special fix */
 			}
-			:is(
+			& :is(
 				yt-live-chat-renderer,
 				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
@@ -596,7 +596,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			)::before {
 				opacity: var(--ytcex-fullscreen-chat-opacity-def);
 			}
-			yt-live-chat-banner-manager[has-active-banner]::before {	/* parent is "position: absolute;" */
+			& yt-live-chat-banner-manager[has-active-banner]::before {	/* parent is "position: absolute;" */
 				opacity: var(--ytcex-fullscreen-chat-opacity-def);
 				position: absolute;
 				top: 0;
@@ -610,7 +610,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 		}
 		/* optional opacity-hover */
 		&:not([ytcex-fullscreen-chat-chat-docking]):hover {
-			:is(
+			& :is(
 				yt-live-chat-renderer,
 				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
@@ -626,7 +626,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				opacity: var(--ytcex-fullscreen-chat-opacity-hover);
 				transition: opacity .2s;
 			}
-			yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model::before {
+			& yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model::before {
 				opacity: calc(0.4 + 0.6 * var(--ytcex-fullscreen-chat-opacity-hover));		/* special fix */
 			}
 		}
@@ -837,7 +837,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 		}
 		/* optional card-opacity-hover */
 		&:not([ytcex-fullscreen-chat-chat-docking]):hover {
-			:is(
+			& :is(
 				yt-live-chat-paid-sticker-renderer:not([dashboard-money-feed]) #card.yt-live-chat-paid-sticker-renderer,
 				yt-live-chat-paid-message-renderer #card.yt-live-chat-paid-message-renderer,
 				yt-live-chat-membership-item-renderer[show-only-header] #header.yt-live-chat-membership-item-renderer,
