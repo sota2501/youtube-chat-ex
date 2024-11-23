@@ -127,7 +127,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
 				#header.yt-live-chat-product-picker-panel-view-model,
-				yt-live-chat-product-picker-panel-item-view-model
+				yt-live-chat-product-picker-panel-item-view-model,
+				yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model
 			) {
 				background: none;
 			}
@@ -191,7 +192,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
 				#header.yt-live-chat-product-picker-panel-view-model,
-				yt-live-chat-product-picker-panel-item-view-model
+				yt-live-chat-product-picker-panel-item-view-model, 
+				yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model
 			) {
 				position: relative;
 			}
@@ -205,7 +207,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
 				#header.yt-live-chat-product-picker-panel-view-model,
-				yt-live-chat-product-picker-panel-item-view-model
+				yt-live-chat-product-picker-panel-item-view-model,
+				yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model
 			)::before {
 				position: absolute;
 				top: 0;
@@ -575,6 +578,10 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			:is(#header.yt-live-chat-product-picker-panel-view-model, yt-live-chat-product-picker-panel-item-view-model)::before {
 				background-color: var(--yt-spec-base-background);
 			}
+			yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model::before {
+				background-color: var(--yt-spec-suggested-action);
+				opacity: calc(0.4 + 0.6 * var(--ytcex-fullscreen-chat-opacity-def));		/* special fix */
+			}
 			:is(
 				yt-live-chat-renderer,
 				tp-yt-paper-dialog,
@@ -602,21 +609,26 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 		}
 		/* optional opacity-hover */
-		&:not([ytcex-fullscreen-chat-chat-docking]):hover :is(
-			yt-live-chat-renderer,
-			tp-yt-paper-dialog,
-			yt-live-chat-toast-renderer[is-message-visible],
-			#spinner-container.yt-live-chat-qna-start-panel-renderer,
-			#spinner-container.yt-live-chat-poll-editor-panel-renderer,
-			tp-yt-paper-listbox.yt-dropdown-menu,
-			ytd-menu-popup-renderer,
-			yt-live-chat-banner-manager[has-active-banner],
-			#dropdown.yt-live-chat-text-input-field-renderer,
-			#header.yt-live-chat-product-picker-panel-view-model,
-			yt-live-chat-product-picker-panel-item-view-model
-		)::before {
-			opacity: var(--ytcex-fullscreen-chat-opacity-hover);
-			transition: opacity .2s;
+		&:not([ytcex-fullscreen-chat-chat-docking]):hover {
+			:is(
+				yt-live-chat-renderer,
+				tp-yt-paper-dialog,
+				yt-live-chat-toast-renderer[is-message-visible],
+				#spinner-container.yt-live-chat-qna-start-panel-renderer,
+				#spinner-container.yt-live-chat-poll-editor-panel-renderer,
+				tp-yt-paper-listbox.yt-dropdown-menu,
+				ytd-menu-popup-renderer,
+				yt-live-chat-banner-manager[has-active-banner],
+				#dropdown.yt-live-chat-text-input-field-renderer,
+				#header.yt-live-chat-product-picker-panel-view-model,
+				yt-live-chat-product-picker-panel-item-view-model
+			)::before {
+				opacity: var(--ytcex-fullscreen-chat-opacity-hover);
+				transition: opacity .2s;
+			}
+			yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model::before {
+				opacity: calc(0.4 + 0.6 * var(--ytcex-fullscreen-chat-opacity-hover));		/* special fix */
+			}
 		}
 		/* optional card-opacity-def */
 		&:not([ytcex-fullscreen-chat-chat-docking]) {
@@ -840,6 +852,17 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			)::after {
 				opacity: var(--ytcex-fullscreen-chat-card-opacity-hover);
 				transition: opacity .2s;
+			}
+		}
+
+		/* milestone chat menu item */
+		&:not([ytcex-fullscreen-chat-chat-docking]) {
+			& yt-live-chat-product-picker-panel-item-view-model[has-promotion] #endpoint.yt-live-chat-product-picker-panel-item-view-model:hover {
+				background-color: var(--yt-spec-10-percent-layer);
+
+				&::before {
+					opacity: 0;
+				}
 			}
 		}
 	}
