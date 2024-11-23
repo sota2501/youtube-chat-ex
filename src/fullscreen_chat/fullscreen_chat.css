@@ -326,7 +326,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			& button {
 				text-shadow: none;
 			}
-			& #action-buttons.yt-live-chat-paid-message-renderer button {
+			& :is(#action-buttons.yt-live-chat-paid-message-renderer, #action-button.ytd-offer-content-renderer) button {
 				text-shadow: inherit
 			}
 			/* text-outline not-applicable-list */
