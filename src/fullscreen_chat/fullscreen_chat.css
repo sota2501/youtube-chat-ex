@@ -220,11 +220,11 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			/* acrylic */
 			& :is(
-				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
 				#spinner-container.yt-live-chat-qna-start-panel-renderer,
 				#spinner-container.yt-live-chat-poll-editor-panel-renderer,
 				tp-yt-paper-listbox.yt-dropdown-menu,
+				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
 				yt-live-chat-product-picker-panel-view-model
 			) {
