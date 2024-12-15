@@ -220,6 +220,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			/* acrylic */
 			& :is(
+				tp-yt-paper-dialog,
 				yt-live-chat-toast-renderer[is-message-visible],
 				#spinner-container.yt-live-chat-qna-start-panel-renderer,
 				#spinner-container.yt-live-chat-poll-editor-panel-renderer,
