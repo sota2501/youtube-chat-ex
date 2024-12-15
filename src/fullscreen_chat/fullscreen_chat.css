@@ -1,6 +1,9 @@
 /* top */
 body.no-scroll ytd-app[ytcex-fullscreen-chat] {
-	& #columns #secondary {
+	& :is(
+		#columns #secondary,
+		#below.ytd-watch-flexy	/* temporary fix */
+	) {
 		position: unset;
 	}
 	&[ytcex-fullscreen-chat-chat-docking] {
