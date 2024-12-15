@@ -69,7 +69,7 @@ html.ytcexHasNotification :is(
 	margin: 4px 0;
 }
 .ytcex-options-caption {
-	color: var(--yt-spec-text-secondary);
+	color: var(--yt-spec-text-primary);
 	font-size: var(--ytd-tab-system-font-size);
 	font-weight: var(--ytd-tab-system-font-weight);
 	letter-spacing: var(--ytd-tab-system-letter-spacing);
