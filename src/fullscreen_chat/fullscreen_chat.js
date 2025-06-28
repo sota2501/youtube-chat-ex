@@ -220,8 +220,8 @@ export default class FullscreenChat extends Ext {
 			this.moving = false;
 
 			// 移動アイコン追加
-			const chatTypeBtn = document.querySelector("#chat-messages > yt-live-chat-header-renderer > #primary-content");
-			chatTypeBtn.insertAdjacentHTML("afterend", `
+			const chatTypeBtn = document.querySelector("#chat-messages > yt-live-chat-header-renderer > #live-chat-header-context-menu");
+			chatTypeBtn.insertAdjacentHTML("beforebegin", `
 				<yt-live-chat-button id="ytcex-fullscreen-move" class="style-scope yt-live-chat-header-renderer" modern data-btn-id="0">
 					<yt-button-renderer class="style-scope yt-live-chat-header-renderer" is-icon-button="" has-no-text=""></yt-button-renderer>
 				</yt-live-chat-button>

@@ -330,7 +330,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			& button {
 				text-shadow: none;
 			}
-			& :is(#action-buttons.yt-live-chat-paid-message-renderer, #action-button.ytd-offer-content-renderer) button {
+			& :is(#action-buttons.yt-live-chat-paid-message-renderer, #action-button.ytd-offer-content-renderer, #viewer-leaderboard-entry-point.yt-live-chat-header-renderer) button {
 				text-shadow: inherit
 			}
 			/* text-outline not-applicable-list */
@@ -455,6 +455,9 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				yt-button-renderer.ytd-sponsorships-live-chat-gift-purchase-announcement-renderer,
 				#author-photo,
 				yt-live-chat-author-badge-renderer[type="verified"] #image,
+				#before-content-buttons.yt-live-chat-text-message-renderer,
+				.ytvlLiveLeaderboardItemViewModelAvatar,
+				.ytvlLiveLeaderboardItemChannelContentViewModelBadge,
 				#show-more.yt-live-chat-item-list-renderer,
 				#banner-content.yt-live-chat-qna-start-panel-renderer,
 				#poll-editor.yt-live-chat-poll-editor-panel-renderer,
@@ -511,6 +514,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				yt-dropdown-menu .yt-dropdown-menu[style-target=label-text],
 				tp-yt-paper-item-body,
 				tp-yt-paper-item-body > *,
+				#viewer-leaderboard-entry-point yt-animated-rolling-number,
 				#author-name.single-line.yt-live-chat-author-chip,
 				#primary-text.ytd-sponsorships-live-chat-header-renderer,
 				yt-live-chat-banner-header-renderer,
@@ -533,6 +537,9 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				margin-bottom: -2px;
 				padding-top: 4px;
 				padding-bottom: 4px;
+			}
+			& ytd-item-section-renderer.ytd-section-list-renderer ytvl-live-leaderboard-item-view-model .ytvlLiveLeaderboardItemViewModelPoints {
+				margin-right: 2px;
 			}
 			& iron-input.tp-yt-paper-input > input.style-scope.tp-yt-paper-input::placeholder {
 				padding-left: 2px;
