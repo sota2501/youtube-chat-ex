@@ -127,6 +127,7 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				#right-arrow-container.yt-live-chat-ticker-renderer,
 				yt-live-chat-banner-manager[has-active-banner],
 				tp-yt-paper-listbox.yt-dropdown-menu,
+				#menu.yt-live-chat-text-message-renderer,
 				ytd-menu-popup-renderer,
 				#dropdown.yt-live-chat-text-input-field-renderer,
 				#header.yt-live-chat-product-picker-panel-view-model,
@@ -165,10 +166,11 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			}
 			& .yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--text:hover {
 				position: relative;
+				z-index: 0;
 				background: none;
 
 				&::before {
-					opacity: 0.275;
+					opacity: 0.6;
 					position: absolute;
 					top: 0;
 					left: 0;
@@ -176,16 +178,8 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 					width: 100%;
 					height: 100%;
 					border-radius: 18px;
-					background: var(--yt-spec-call-to-action);
+					background: var(--yt-spec-suggested-action);
 					content: '';
-				}
-			}
-			& .yt-spec-button-shape-next--mono.yt-spec-button-shape-next--filled {
-				background: none;
-
-				&:hover {
-					background: var(--yt-spec-black-pure-alpha-30);
-					backdrop-filter: contrast(0.5);
 				}
 			}
 			/* configured opacity */
@@ -330,8 +324,15 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 			& button {
 				text-shadow: none;
 			}
-			& :is(#action-buttons.yt-live-chat-paid-message-renderer, #action-button.ytd-offer-content-renderer, #viewer-leaderboard-entry-point.yt-live-chat-header-renderer) button {
+			& :is(
+				#action-buttons.yt-live-chat-paid-message-renderer,
+				#action-button.ytd-offer-content-renderer,
+				#viewer-leaderboard-entry-point.yt-live-chat-header-renderer
+			) button {
 				text-shadow: inherit
+			}
+			& .yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--text {
+				text-shadow: inherit;
 			}
 			/* text-outline not-applicable-list */
 			& :is(
@@ -344,8 +345,6 @@ yt-live-chat-app[ytcex-fullscreen-chat] {
 				#card.yt-live-chat-upsell-dialog-renderer,
 				#inner.yt-live-chat-dialog-renderer,
 				yt-tooltip-renderer,
-				.yt-spec-button-shape-next--call-to-action-inverse.yt-spec-button-shape-next--text,
-				.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--filled,
 				.tp-yt-paper-tooltip[style-target=tooltip],
 				#banner-content.yt-live-chat-qna-start-panel-renderer,
 				#poll-editor.yt-live-chat-poll-editor-panel-renderer,
