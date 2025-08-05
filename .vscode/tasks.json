@@ -4,7 +4,7 @@
 		{
 			"type": "shell",
 			"label": "Archive",
-			"command": "Compress-Archive ${workspaceFolder}/src/* ${workspaceFolder}/YoutubeEx.zip",
+			"command": "Compress-Archive ${workspaceFolder}/src/* ${workspaceFolder}/YoutubeEx-$(Get-Date -Format \"yyyy-MM-dd\").zip",
 			"group": {
 				"kind": "build",
 				"isDefault": true
