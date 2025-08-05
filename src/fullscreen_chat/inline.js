@@ -16,4 +16,5 @@
 		toggled: false,
 		type: "text"
 	};
+	shape.querySelector("button").classList.add("yt-spec-button-shape-next--icon-only-default");
 })();

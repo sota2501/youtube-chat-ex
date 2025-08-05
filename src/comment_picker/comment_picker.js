@@ -111,16 +111,15 @@ export default class CommentPicker extends Ext {
 		ytIconButton.style.visibility = "hidden";
 		ytIconButton.setAttribute("disabled", "");
 		newWrapper.querySelector("#contents").append(ytIconButton);
+		const button = document.createElement("button");
+		button.id = "button";
+		button.classList.add("style-scope", "yt-icon-button");
+		button.setAttribute("aria-label", "さらに下のコメントを表示");
+		ytIconButton.append(button);
 		const ytIcon = document.createElement("yt-icon");
+		ytIcon.setAttribute("icon", "down_arrow");
 		ytIcon.classList.add("style-scope", "yt-live-chat-item-list-renderer");
-		ytIconButton.prepend(ytIcon);
-		ytIcon.insertAdjacentHTML("beforeend", `
-			<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
-				<g class="style-scope yt-icon">
-					<polygon points="18.65,11.65 12,18.29 12,4 11,4 11,18.29 4.35,11.65 3.65,12.35 11.5,20.21 19.35,12.35 " class="style-scope yt-icon"></polygon>
-				</g>
-			</svg>
-		`);
+		button.append(ytIcon);
 		this.addedItems = newWrapper.querySelector("#items");
 
 		window.addEventListener("resize", this._bind.resizeEvent);

@@ -280,7 +280,7 @@ export default class Options extends Ext {
 			menu.insertAdjacentHTML("beforeend", `
 				<div id="ytcex-menu-item" class="style-scope ytd-menu-popup-renderer" use-icons="" system-icons="" role="menuitem">
 					<tp-yt-paper-item class="style-scope ytd-menu-service-item-renderer" style-target="host" role="option" tabindex="0" aria-disabled="false">
-						<yt-icon class="style-scope ytd-menu-service-item-renderer" style="display: inline-block;"></yt-icon>
+						<yt-icon class="style-scope ytd-menu-service-item-renderer"></yt-icon>
 						<yt-formatted-string class="style-scope ytd-menu-service-item-renderer"></yt-formatted-string>
 					</tp-yt-paper-item>
 				</div>
@@ -289,16 +289,18 @@ export default class Options extends Ext {
 			const menuItem = menu.querySelector("#ytcex-menu-item");
 			const ytIcon = menuItem.querySelector("yt-icon");
 			ytIcon.insertAdjacentHTML("beforeend", `
-				<svg viewBox="0 0 24 24" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
-					<style>
-						div.ytd-menu-popup-renderer yt-icon.ytd-menu-service-item-renderer {
-							fill: var(--yt-spec-text-primary)
-						}
-					</style>
-					<g class="style-scope yt-icon">
-						<path d="M7,21l4-4h8c1.1,0,2-.9,2-2v-10c0-1.1-0.9-2-2-2h-14c-1.1,0-2,.9-2,2v10c0,1.1,.9,2,2,2h2v4ZM6,6h12v2h-12v-2ZM6,9h12v2h-12v-2ZM6,12h12v2h-12v-2Z"></path>
-					</g>
-				</svg>
+				<span class="yt-icon-shape style-scope yt-icon yt-spec-icon-shape">
+					<div style="width: 100%; height: 100%; display: block; fill: currentcolor;">
+						<style>
+							#ytcex-menu-item yt-icon {
+								color: var(--yt-spec-text-primary)
+							}
+						</style>
+						<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
+							<path d="M7,21l4-4h8c1.1,0,2-.9,2-2v-10c0-1.1-0.9-2-2-2h-14c-1.1,0-2,.9-2,2v10c0,1.1,.9,2,2,2h2v4ZM6,6h12v2h-12v-2ZM6,9h12v2h-12v-2ZM6,12h12v2h-12v-2Z"></path>
+						</svg>
+					</div>
+				</span>
 			`);
 
 			const ytFormattedString = menuItem.querySelector("yt-formatted-string");

@@ -232,21 +232,19 @@ export default class FullscreenChat extends Ext {
 			script.src = chrome.runtime.getURL("fullscreen_chat/inline.js");
 			buttonRenderer.appendChild(script);
 			setTimeout(() => {
-				const ytIcon = buttonRenderer.querySelector("yt-icon");
-				ytIcon.insertAdjacentHTML("beforeend", `
-					<svg viewBox="0 0 24 24" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
-						<style>
-							yt-icon-button.yt-live-chat-header-renderer yt-icon.yt-live-chat-header-renderer {
-								fill: var(--yt-spec-icon-inactive)
-							}
-							yt-icon-button.yt-live-chat-header-renderer:hover yt-icon.yt-live-chat-header-renderer {
-								fill: var(--yt-spec-icon-active-other)
-							}
-						</style>
-						<g class="style-scope yt-icon">
-							<path d="M12.5,12.5v7.086l2-2l.707,.707L12.5,21h-1l-2.707-2.707l.707-.707l2,2V12.5h-7.086l2,2l-.707,.707L3,12.5v-1l2.707-2.707l.707,.707l-2,2H11.5v-7.086l-2,2l-.707-.707L11.5,3h1l2.707,2.707l-.707,.707l-2-2V11.5h7.086l-2-2l.707-.707L21,11.5v1l-2.707,2.707l-.707-.707l2-2H12.5Z"></path>
-						</g>
-					</svg>
+				const ytIcon = buttonRenderer.querySelector("button");
+				ytIcon.insertAdjacentHTML("afterbegin", `
+					<div aria-hidden="true" class="yt-spec-button-shape-next__icon">
+						<span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
+							<span class="yt-icon-shape yt-spec-icon-shape">
+								<div style="width: 100%; height: 100%; display: block; fill: currentcolor;">
+									<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" focusable="false" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
+										<path d="M12.5,12.5v7.086l2-2l.707,.707L12.5,21h-1l-2.707-2.707l.707-.707l2,2V12.5h-7.086l2,2l-.707,.707L3,12.5v-1l2.707-2.707l.707,.707l-2,2H11.5v-7.086l-2,2l-.707-.707L11.5,3h1l2.707,2.707l-.707,.707l-2-2V11.5h7.086l-2-2l.707-.707L21,11.5v1l-2.707,2.707l-.707-.707l2-2H12.5Z"></path>
+									</svg>
+								</div>
+							</span>
+						</span>
+					</div>
 				`);
 				const button = buttonRenderer.querySelector("button");
 				button.addEventListener("mousedown", this._bind.grabIframeEvent);
