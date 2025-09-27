@@ -6,6 +6,13 @@ body.no-scroll ytd-app[ytcex-fullscreen-chat] {
 	) {
 		position: unset;
 	}
+	& iframe#chatframe {
+		position: fixed;
+		border: 1px solid var(--yt-spec-10-percent-layer);
+		border-radius: 12px;
+		box-sizing: border-box;
+		z-index: 0;
+	}
 	&[ytcex-fullscreen-chat-chat-docking] {
 		& ytd-watch-flexy {
 			overflow: clip;
@@ -50,14 +57,12 @@ body.no-scroll ytd-app[ytcex-fullscreen-chat] {
 				z-index: 602;
 			}
 		}
-		& ytd-live-chat-frame#chat {
+		& iframe#chatframe {
+			border: 0;
 			border-radius: unset;
 
 			&:hover {
 				z-index: 603;
-			}
-			> iframe#chatframe {
-				border-radius: unset;
 			}
 		}
 	}

@@ -332,11 +332,21 @@ export default class FullscreenChat extends Ext {
 	}
 
 	fullscreenMainEvent() {
+		const wrapper = document.querySelector("ytd-live-chat-frame#chat");
+		const chatframe = document.querySelector("iframe#chatframe");
 		if (this._status.get("yt-fullscreen")) {
 			document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat-fullscreen", "");
+			const marker = document.createElement("div");
+			marker.id = "ytcex-chatframe-marker";
+			chatframe.after(marker);
+			document.querySelector("#container.ytd-player").after(chatframe);
 		} else {
 			document.querySelector("ytd-app").removeAttribute("ytcex-fullscreen-chat-fullscreen");
+			const marker = document.querySelector("#ytcex-chatframe-marker");
+			marker.after(chatframe);
+			marker.remove();
 		}
+		setTimeout(() => wrapper.dispatchEvent(new CustomEvent("yt-chat-collapsed-changed", {bubbles: true, composed: true, detail: true})));
 		if (!YoutubeState.isChatCollapsing()) {
 			this.setIframe(this._status.get("yt-fullscreen"));
 		}
@@ -349,7 +359,7 @@ export default class FullscreenChat extends Ext {
 	}
 
 	setIframe(enable) {
-		this.chatFrame = document.querySelector("ytd-live-chat-frame#chat");
+		this.chatFrame = document.querySelector("iframe#chatframe");
 		if (enable) {
 			if (!this._status.get("FullscreenChat-opt-use-chat-docking") || !this._status.get("FullscreenChat-frame-chat-docking")) {
 				// 浮動チャット
@@ -394,13 +404,11 @@ export default class FullscreenChat extends Ext {
 			}
 		}
 
-		this.chatFrame.style.position = "absolute";
 		this.chatFrame.style.top = top + "px";
 		this.chatFrame.style.left = left + "px";
 		this.chatFrame.style.width = width + "px";
 		this.chatFrame.style.height = height + "px";
 		this.chatFrame.style.minHeight = "400px";
-		this.chatFrame.style.margin = "0";
 
 		if (save) {
 			this._status.set("FullscreenChat-frame-top", top);
@@ -418,17 +426,14 @@ export default class FullscreenChat extends Ext {
 		this.chatFrame.style.width = "";
 		this.chatFrame.style.height = "";
 		this.chatFrame.style.minHeight = "";
-		this.chatFrame.style.margin = "";
 	}
 
 	setChatDocking() {
 		document.querySelector("ytd-app").setAttribute("ytcex-fullscreen-chat-chat-docking", "");
-		this.chatFrame.style.position = "absolute";
 		this.chatFrame.style.top = "0";
 		this.chatFrame.style.right = "0";
 		this.chatFrame.style.width = "400px";
 		this.chatFrame.style.height = "100vh";
-		this.chatFrame.style.margin = "0";
 
 		this._status.set("FullscreenChat-frame-chat-docking", true);
 	}
@@ -440,7 +445,6 @@ export default class FullscreenChat extends Ext {
 		this.chatFrame.style.right = "";
 		this.chatFrame.style.width = "";
 		this.chatFrame.style.height = "";
-		this.chatFrame.style.margin = "";
 	}
 
 	calcChatPosition(grabId, baseTop, baseLeft, baseWidth, baseHeight, moveX, moveY, adjust=false) {
