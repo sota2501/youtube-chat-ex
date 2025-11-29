@@ -118,7 +118,7 @@ export default class FullscreenChat extends Ext {
 						v: 3,
 						type: "text",
 						caption: "FullscreenChat_FixedDescription",
-						onlyLessThanV: 3
+						onlyLessThanInit: 3
 					}
 				]
 			}
@@ -544,7 +544,7 @@ export default class FullscreenChat extends Ext {
 		}
 		this.adjust = false;
 		if (this._status.get("FullscreenChat-frame-chat-docking")) {
-			this.setChatPosition(this.base.top, this.base.left, this.base.width, this.base.height);
+			setTimeout(() => this.setChatPosition(this.base.top, this.base.left, this.base.width, this.base.height));	// setTimeoutがないとなぜかstyleが書き込まれない
 			this._event.dispatch("FullscreenChat-chat-docking", false);
 			window.dispatchEvent(new Event("resize"));
 		}
