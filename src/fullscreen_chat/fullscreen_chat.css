@@ -1,70 +1,36 @@
 /* top */
 body.no-scroll ytd-app[ytcex-fullscreen-chat] {
-	& :is(
-		#columns #secondary,
-		#below.ytd-watch-flexy	/* temporary fix */
-	) {
-		position: unset;
+	&:not([ytcex-fullscreen-chat-chat-collapsing]):not([ytcex-fullscreen-chat-chat-docking]) {
+		& #movie_player {
+			position: static;
+		}
+		& ytd-watch-flexy[squeezeback][panel-expanded] #panels-full-bleed-container.ytd-watch-flexy {
+			width: 0;
+			transform: none;
+			animation: none;
+		}
 	}
-	& iframe#chatframe {
-		position: fixed;
-		border: 1px solid var(--yt-spec-10-percent-layer);
-		border-radius: 12px;
-		box-sizing: border-box;
-		z-index: 0;
+	&::after {
+		content: "";
+		height: calc(100% - 24px);
+		width: 36px;
+		position: absolute;
+		top: 12px;
+		right: 0px;
+		border-radius: 12px 0 0 12px;
+		z-index: 20;
+		background: rgb(128 128 128 / 0.75);
+		transform: translateX(100%);
 	}
-	&[ytcex-fullscreen-chat-chat-docking] {
-		& ytd-watch-flexy {
-			overflow: clip;
-		}
-		& #full-bleed-container {
-			width: calc(100vw - 400px);
-			overflow: unset;
-
-			& .html5-video-player {
-				overflow: unset;
-				z-index: unset;
-			}
-			& .html5-video-container {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-
-				& > .html5-main-video {
-					position: unset;
-					width: 100% !important;
-					height: 100% !important;
-					object-fit: contain;
-				}
-			}
-			& .ytp-storyboard-framepreview .ytp-storyboard-framepreview-img {
-				width: 100vw;
-				transform: scale(calc((1920 - 400) / 1920));	/* TODO */
-				transform-origin: left;
-			}
-			& .ytp-offline-slate-background {
-				background-size: contain;
-				background-repeat: no-repeat;
-			}
-			& .ytp-iv-video-content {
-				width: calc(100vw - 400px)!important;	/* TODO */
-			}
-			& .ytp-gradient-bottom {
-				width: 100vw;
-				z-index: 602;
-			}
-			& .ytp-chrome-bottom {
-				z-index: 602;
-			}
-		}
-		& iframe#chatframe {
-			border: 0;
-			border-radius: unset;
-
-			&:hover {
-				z-index: 603;
-			}
-		}
+	&:not([ytcex-fullscreen-chat-chat-docking])::after {
+		transition: transform .3s;
+	}
+	&[ytcex-fullscreen-chat-chat-docking-guide]::after {
+		transform: translateX(66.7%);
+		transition: transform .3s;
+	}
+	&[ytcex-fullscreen-chat-chat-docking-guide-extend]::after {
+		transform: translateX(0%);
 	}
 }
 

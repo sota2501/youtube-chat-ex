@@ -2,7 +2,7 @@ import Ext from "../base/ext.js";
 import YoutubeState from "../youtube/youtube_state.js";
 
 export default class Options extends Ext {
-	v = 2;
+	v = 3;
 
 	constructor(event, status, debug) {
 		super(event, status, debug);
@@ -15,9 +15,21 @@ export default class Options extends Ext {
 	}
 
 	init() {
+		this._status.addNew("Options-init", 0, "sync");
+		this._status.addNew("Options-init-date", null, "sync");
 		this._status.addNew("Options-v", 0, "sync");
 		this._status.addNew("flag-notification", true, "sync");
 		this._status.addNew("flag-use-local", false, "local");
+
+		if (this._status.get("Options-init") == 0) {
+			if (this._status.get("Options-v") == 0) {
+				this._status.set("Options-init", this.v);
+				this._status.set("Options-init-date", (new Date()).toISOString());
+			} else if(this._status.get("Options-v") == 2) {	// init追加にあたって既存ユーザーに明示的に設定
+				this._status.set("Options-init", 2);
+				this._status.set("Options-init-date", "2025-12-01T00:00:00.000Z");
+			}
+		}
 
 		if (YoutubeState.isChatFrame()) {
 			this.appendSettingsDOM();
@@ -108,6 +120,13 @@ export default class Options extends Ext {
 	}
 
 	appendSettingDOM(wrapper, options) {
+		if (
+			(options.onlyLessThanInit ?? this.v + 1) <= this._status.get("Options-init")
+			|| (options.onlyLessThanV ?? this.v + 1) <= this._status.get("Options-v")
+			|| this._status.get("Options-v") == 0 && (options.onlyLessThanV ?? this.v + 1) <= this._status.get("Options-init")
+		) {
+			return;
+		}
 		if (options.type == "margin") {
 			wrapper.insertAdjacentHTML("beforeend", `<div class="style-scope ytcex-options-margin" style="height: 16px;"></div>`);
 			return

@@ -1,16 +1,20 @@
 html.ytcexHasNotification :is(
-	#live-chat-header-context-menu.yt-live-chat-header-renderer,
-	#ytcex-menu-item
-) yt-icon:after {
-	display: flex;
-	position: absolute;
-	top: -2px;
-	right: -2px;
-	width: 11px;
-	height: 11px;
-	border-radius: 50%;
-	background: var(--yt-spec-themed-blue);
-	content: "";
+	#live-chat-header-context-menu.yt-live-chat-header-renderer .yt-spec-button-shape-next__icon,
+	#ytcex-menu-item yt-icon
+) {
+	position: relative;
+
+	&::after {
+		display: flex;
+		position: absolute;
+		top: -2px;
+		right: -2px;
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+		background: var(--paper-toggle-button-checked-button-color,var(--primary-color));
+		content: "";
+	}
 }
 
 #ytcex-menu-item {
@@ -77,7 +81,7 @@ html.ytcexHasNotification :is(
 	flex-basis: 1e-9px;
 }
 .ytcex-options-caption[is-new] {
-	text-decoration: underline var(--yt-spec-themed-blue);
+	text-decoration: underline var(--paper-toggle-button-checked-button-color,var(--primary-color));
 }
 
 .ytcex-options-toggle-container {

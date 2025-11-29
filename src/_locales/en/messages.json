@@ -47,6 +47,9 @@
 	"FullscreenChat_Description": {
 		"message": "View chat list in full screen"
 	},
+	"FullscreenChat_FixedDescription": {
+		"message": "<span style=\"color: darkgray\">&gt; 2025-11-30 Fixed</span>"
+	},
 	"FullscreenChat_TextOutline": {
 		"message": "Text Outline"
 	},
@@ -71,11 +74,8 @@
 	"FullscreenChat_CardOpacityHover": {
 		"message": "Opacity for Super Chat on hover"
 	},
-	"FullscreenChat_UseChatDocking": {
-		"message": "Pin the chat list to the right side"
-	},
 	"FullscreenChat_ChatDockingDescription": {
-		"message": "To fix the chat list, grab and move it to the right edge of the screen."
+		"message": "<span style=\"color: darkgray\">* The right-side fixation setting for the chat box has been removed due to changes in YouTube's UI.</span>"
 	},
 
 	"ChatTickerScroll_Description": {

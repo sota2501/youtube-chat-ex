@@ -47,6 +47,9 @@
 	"FullscreenChat_Description": {
 		"message": "フルスクリーンでのチャット覧表示"
 	},
+	"FullscreenChat_FixedDescription": {
+		"message": "<span style=\"color: darkgray\">&gt; 2025-11-30 修正しました</span>"
+	},
 	"FullscreenChat_TextOutline": {
 		"message": "テキスト縁取り"
 	},
@@ -71,11 +74,8 @@
 	"FullscreenChat_CardOpacityHover": {
 		"message": "ホバー時の不透明度"
 	},
-	"FullscreenChat_UseChatDocking": {
-		"message": "チャット欄の右固定"
-	},
 	"FullscreenChat_ChatDockingDescription": {
-		"message": "チャット欄を掴んで画面右端に移動することで固定化されます。"
+		"message": "<span style=\"color: darkgray\">※チャット欄の右固定設定はYouTubeのUI変更に伴い削除しました</span>"
 	},
 
 	"ChatTickerScroll_Description": {
