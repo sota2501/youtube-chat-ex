@@ -196,6 +196,8 @@ export default class FullscreenChat extends Ext {
 			this._event.listen("FullscreenChat-iframe-ungrab", this._bind.ungrabMainEvent);
 			this._event.listen("FullscreenChat-iframe-adjust-fixed-length", this._bind.adjustMainEvent);
 			window.addEventListener("resize", this._bind.loadMainEvent);
+			this.loadMainEvent();
+			window.dispatchEvent(new Event("resize"));
 		}else if(YoutubeState.isIframeChatFrame()){
 			document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat", "");
 			if(this._status.get("FullscreenChat-opt-text-outline")){
@@ -289,6 +291,7 @@ export default class FullscreenChat extends Ext {
 			this._event.unlisten("FullscreenChat-iframe-adjust-fixed-length", this._bind.adjustMainEvent);
 			window.removeEventListener("resize", this._bind.loadMainEvent);
 			this.setIframe(false);
+			window.dispatchEvent(new Event("resize"));
 		}else if(YoutubeState.isIframeChatFrame()){
 			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat");
 			document.querySelector("yt-live-chat-app").removeAttribute("ytcex-fullscreen-chat-text-outline");
