@@ -196,7 +196,7 @@ export default class FullscreenChat extends Ext {
 			this._event.listen("FullscreenChat-iframe-ungrab", this._bind.ungrabMainEvent);
 			this._event.listen("FullscreenChat-iframe-adjust-fixed-length", this._bind.adjustMainEvent);
 			window.addEventListener("resize", this._bind.loadMainEvent);
-			this.loadMainEvent();
+			this.setIframe(this._status.get("yt-fullscreen") && !YoutubeState.isChatCollapsing() && !this._status.get("FullscreenChat-frame-chat-docking"), this._status.get("FullscreenChat-frame-chat-docking"));
 			window.dispatchEvent(new Event("resize"));
 		}else if(YoutubeState.isIframeChatFrame()){
 			document.querySelector("yt-live-chat-app").setAttribute("ytcex-fullscreen-chat", "");
