@@ -373,7 +373,10 @@ export default class Options extends Ext {
 	openOptions() {
 		const chatMessages = document.querySelector("#chat-messages");
 		const optionsPage = document.querySelector("#ytcex-options-wrapper");
-		optionsPage.click();
+		const dropdown = document.querySelector("#ytcex-menu-item")?.closest("tp-yt-iron-dropdown");
+		if (dropdown) {
+			dropdown.style.display = "none";
+		}
 		optionsPage.classList.add("iron-selected");
 		chatMessages.classList.remove("iron-selected");
 		document.documentElement.classList.remove("ytcexHasNotification");

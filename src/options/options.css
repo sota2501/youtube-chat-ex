@@ -178,7 +178,7 @@ html.ytcexHasNotification :is(
 	height: 18px;
 	border: 0;
 	border-radius: 9px;
-	background: var(--yt-spec-touch-response);
+	background: var(--yt-live-chat-slider-active-color, #2196f3);
 	transition: transform 0.08s;
 }
 .ytcex-options-slider-bright {
@@ -188,7 +188,7 @@ html.ytcexHasNotification :is(
 	margin-top: -2.5px;
 	width: 100px;
 	height: 5px;
-	background: var(--yt-spec-touch-response);
+	background: var(--yt-live-chat-slider-active-color, #2196f3);
 }
 .ytcex-options-slider-shadow {
 	position: absolute;
@@ -197,7 +197,7 @@ html.ytcexHasNotification :is(
 	margin-top: -2.5px;
 	width: 100px;
 	height: 5px;
-	background: var(--yt-spec-icon-disabled,#000);
+	background: var(--yt-live-chat-slider-container-color, #515151);
 }
 .ytcex-options-slider[disabled] .ytcex-options-slider-handle {
 	background: #bdbdbd;
