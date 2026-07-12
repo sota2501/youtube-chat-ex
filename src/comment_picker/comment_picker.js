@@ -220,7 +220,7 @@ export default class CommentPicker extends Ext {
 		replacement.classList.add("fixedComment");
 		replacement.dataset.commentId = elm.id;
 		elm.after(replacement);
-		replacement.querySelector("#content > #message").innerText = chrome.i18n.getMessage("CommentPicker_ReplaceText");
+		replacement.querySelector("#content #message").innerText = chrome.i18n.getMessage("CommentPicker_ReplaceText");
 		replacement.querySelector("#menu").setAttribute("hidden", "");
 		const addedScroller = this.addedItems.closest("#item-scroller");
 		const scrolling = addedScroller.scrollTop < addedScroller.scrollHeight - addedScroller.clientHeight;

@@ -539,14 +539,17 @@ export default class FullscreenChat extends Ext {
 			x: rect.x + event.pageX,
 			y: rect.y + event.pageY
 		}
+		const width = this._status.get("FullscreenChat-frame-width");
+		const height = this._status.get("FullscreenChat-frame-height");
+		const docking = this._status.get("FullscreenChat-frame-chat-docking");
 		this.base = {
 			top: rect.top,
-			left: rect.left,
-			width: this._status.get("FullscreenChat-frame-width"),
-			height: this._status.get("FullscreenChat-frame-height")
+			left: docking ? rect.right - width : rect.left,
+			width: width,
+			height: height
 		}
 		this.adjust = false;
-		if (this._status.get("FullscreenChat-frame-chat-docking")) {
+		if (docking) {
 			setTimeout(() => this.setChatPosition(this.base.top, this.base.left, this.base.width, this.base.height));	// setTimeoutがないとなぜかstyleが書き込まれない
 			this._event.dispatch("FullscreenChat-chat-docking", false);
 			window.dispatchEvent(new Event("resize"));
